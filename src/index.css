@@ -1,0 +1,277 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark mode styles */
+@layer base {
+  html {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .dark {
+    color-scheme: dark;
+  }
+  
+  .dark body {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 50%, #0f172a 100%);
+  }
+  
+  body {
+    background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 50%, #f3e8ff 100%);
+    transition: background 0.3s ease;
+  }
+}
+
+/* Custom animations for real-time collaboration */
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: rgba(34, 197, 94, 0.5);
+  }
+  50% {
+    border-color: rgba(34, 197, 94, 1);
+  }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.3s ease-out;
+}
+
+.animate-pulse-border {
+  animation: pulse-border 2s infinite;
+}
+
+/* Custom scrollbar for better UX */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-track {
+  background: #374151;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #6b7280;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Smooth transitions for collaboration features */
+.collaboration-transition {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Live editing indicator styles */
+.live-editing-border {
+  border: 2px solid #22c55e;
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
+  animation: pulse-border 2s infinite;
+}
+
+/* User presence indicator styles */
+.presence-indicator {
+  position: relative;
+}
+
+.presence-indicator::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 12px;
+  height: 12px;
+  background: #22c55e;
+  border: 2px solid white;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.dark .presence-indicator::after {
+  border-color: #1f2937;
+}
+
+/* Notification styles */
+.notification-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.notification-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 0.3s ease-out;
+}
+
+.notification-exit {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.notification-exit-active {
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.3s ease-in;
+}
+
+/* Smooth scrolling for onboarding cards */
+.smooth-scroll {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced scrollbar styling for onboarding */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+.dark .scrollbar-thin {
+  scrollbar-color: #6b7280 #374151;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-track {
+  background: #374151;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #6b7280;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+.scrollbar-thin::-webkit-scrollbar-corner {
+  background: #f1f5f9;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-corner {
+  background: #374151;
+}
+
+/* Dark mode specific component styles */
+.dark .bg-gradient-to-br {
+  background: linear-gradient(135deg, #1f2937 0%, #111827 50%, #0f172a 100%);
+}
+
+.dark .bg-white\/80 {
+  background: rgba(31, 41, 55, 0.8);
+}
+
+.dark .border-white\/20 {
+  border-color: rgba(107, 114, 128, 0.2);
+}
+
+/* Toast notification styles */
+.toast-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  font-weight: 500;
+  animation: slide-in-right 0.3s ease-out;
+}
+
+.dark .toast-success {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Profile image upload styles */
+.image-upload-preview {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.image-upload-preview::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(59, 130, 246, 0.1) 50%, transparent 70%);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Theme transition animations */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Language selector styles */
+.language-selector {
+  position: relative;
+}
+
+.language-selector::after {
+  content: '🌐';
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Success banner styles */
+.success-banner {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+  animation: slide-in-right 0.5s ease-out;
+}
+
+.dark .success-banner {
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
