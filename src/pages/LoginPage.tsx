@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Compass, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -10,6 +10,7 @@ const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   if (user) {
     return <Navigate to="/" replace />;
@@ -22,6 +23,11 @@ const LoginPage: React.FC = () => {
 
     try {
       await login(email, password);
+      
+      // If email contains 'admin', redirect to admin dashboard
+      if (email.includes('admin')) {
+        navigate('/admin');
+      }
     } catch (err) {
       setError('Invalid email or password');
     } finally {
@@ -117,7 +123,7 @@ const LoginPage: React.FC = () => {
           {/* Demo Account */}
           <div className="mt-6 p-4 bg-blue-50 rounded-lg">
             <p className="text-sm text-blue-800 text-center">
-              Demo: Use any email and password to sign in
+              Demo: Use <strong>admin@example.com</strong> and any password to access the admin panel
             </p>
           </div>
         </div>
