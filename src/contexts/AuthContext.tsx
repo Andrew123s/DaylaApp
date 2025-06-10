@@ -10,6 +10,7 @@ interface User {
   preferences?: UserPreferences;
   hasCompletedOnboarding?: boolean;
   settings?: UserSettings;
+  isAdmin?: boolean; // Added isAdmin property
 }
 
 interface UserSettings {
@@ -203,6 +204,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       bio: 'Love exploring new places and creating memories!',
       interests: ['Hiking', 'Photography', 'Culture'],
       hasCompletedOnboarding: true,
+      isAdmin: email.includes('admin'), // Make admin if email contains 'admin'
       settings: {
         language: 'en',
         theme: 'light',
@@ -236,6 +238,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       name,
       avatar: 'https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
       hasCompletedOnboarding: false,
+      isAdmin: email.includes('admin'), // Make admin if email contains 'admin'
       settings: {
         language: 'en',
         theme: 'light',

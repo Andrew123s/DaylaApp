@@ -14,17 +14,40 @@ import TripPlanner from './pages/TripPlanner';
 import InvitePage from './pages/InvitePage';
 import SupabaseTest from './pages/SupabaseTest';
 
+// Admin pages
+import AdminLayout from './pages/admin/AdminLayout';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import UserManagement from './pages/admin/UserManagement';
+import TripManagement from './pages/admin/TripManagement';
+import PaymentManagement from './pages/admin/PaymentManagement';
+import ContentModeration from './pages/admin/ContentModeration';
+import Analytics from './pages/admin/Analytics';
+import SystemSettings from './pages/admin/SystemSettings';
+
 function App() {
   return (
     <AuthProvider>
       <AppProvider>
         <Router>
-          <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+          <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
             <Routes>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/invite/:inviteCode" element={<InvitePage />} />
               <Route path="/supabase-test" element={<SupabaseTest />} />
+              
+              {/* Admin Routes */}
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<AdminDashboard />} />
+                <Route path="users" element={<UserManagement />} />
+                <Route path="trips" element={<TripManagement />} />
+                <Route path="payments" element={<PaymentManagement />} />
+                <Route path="content" element={<ContentModeration />} />
+                <Route path="analytics" element={<Analytics />} />
+                <Route path="settings" element={<SystemSettings />} />
+              </Route>
+              
+              {/* User Routes */}
               <Route path="/" element={
                 <AuthGuard>
                   <OnboardingGuard>
