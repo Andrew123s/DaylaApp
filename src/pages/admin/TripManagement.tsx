@@ -344,7 +344,7 @@ const TripManagement: React.FC = () => {
                           <Globe className="h-4 w-4 text-blue-500" title="Public Trip" />
                         )}
                         {trip.is_flagged && (
-                          <Flag className="h-4 w-4 text-red-500" title="Flagged" />
+                          <Flag className="h-4 w-4 text-red-500\" title="Flagged" />
                         )}
                       </div>
                     </td>
