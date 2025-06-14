@@ -58,6 +58,36 @@ const Community: React.FC = () => {
     );
   });
 
+  const handleSharePost = (post: any) => {
+    if (navigator.share) {
+      navigator.share({
+        title: post.title,
+        text: `Check out this travel experience: ${post.title}`,
+        url: window.location.href
+      }).catch(err => {
+        console.log('Error sharing:', err);
+        // Fallback for when sharing fails
+        copyPostLink(post);
+      });
+    } else {
+      // Fallback for browsers that don't support navigator.share
+      copyPostLink(post);
+    }
+  };
+
+  const copyPostLink = (post: any) => {
+    // In a real app, this would be a unique URL for the post
+    const postUrl = `${window.location.origin}/community/post/${post.id}`;
+    navigator.clipboard.writeText(postUrl);
+    
+    // Show toast notification
+    const toast = document.createElement('div');
+    toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+    toast.textContent = 'Link copied to clipboard!';
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+  };
+
   return (
     <div className="h-full overflow-y-auto">
       <div className="max-w-4xl mx-auto p-6">
@@ -185,21 +215,24 @@ const Community: React.FC = () => {
 
               {/* Post Actions */}
               <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                <div className="flex items-center space-x-6">
-                  <button className="flex items-center space-x-2 text-gray-600 hover:text-red-600 transition-colors">
+                <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+                  <button className="flex items-center space-x-2 text-gray-600 hover:text-red-600 transition-colors min-h-[44px]">
                     <Heart className="h-5 w-5" />
                     <span className="text-sm">{post.likes}</span>
                   </button>
                   
                   <button 
                     onClick={() => setSelectedPost(selectedPost === post.id ? null : post.id)}
-                    className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors"
+                    className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors min-h-[44px]"
                   >
                     <MessageCircle className="h-5 w-5" />
                     <span className="text-sm">{post.comments.length}</span>
                   </button>
                   
-                  <button className="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors">
+                  <button 
+                    onClick={() => handleSharePost(post)}
+                    className="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors min-h-[44px]"
+                  >
                     <Share2 className="h-5 w-5" />
                     <span className="text-sm">Share</span>
                   </button>
@@ -248,7 +281,7 @@ const Community: React.FC = () => {
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                         rows={2}
                       />
-                      <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
+                      <button className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm min-h-[44px]">
                         Post Comment
                       </button>
                     </div>
@@ -268,7 +301,7 @@ const Community: React.FC = () => {
             </p>
             <button
               onClick={() => setIsCreateModalOpen(true)}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 min-h-[44px]"
             >
               Share Your Adventure
             </button>
@@ -327,7 +360,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({ onClose, onCreate }) 
           <h2 className="text-2xl font-bold text-gray-900">Share Your Experience</h2>
           <button
             onClick={onClose}
-            className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
+            className="p-2 text-gray-500 hover:text-gray-700 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
           >
             <Plus className="h-5 w-5 rotate-45" />
           </button>
@@ -407,13 +440,13 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({ onClose, onCreate }) 
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px]"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200"
+              className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 min-h-[44px]"
             >
               Share Experience
             </button>

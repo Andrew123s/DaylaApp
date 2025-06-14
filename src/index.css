@@ -313,3 +313,55 @@
     scroll-snap-align: start;
   }
 }
+
+/* Fix for mobile UI elements */
+.mobile-action-button {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-center;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+/* Fix for emoji picker positioning */
+.emoji-picker-container {
+  position: fixed;
+  z-index: 9999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 640px) {
+  .emoji-picker-container {
+    width: 90vw;
+    max-width: 320px;
+  }
+}
+
+/* Fix for tab overflow */
+.tab-container {
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 4px;
+}
+
+.tab-item {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Fix for action buttons */
+.action-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.action-button {
+  flex: 0 0 auto;
+}

@@ -112,7 +112,7 @@ const StickyNote: React.FC<StickyNoteProps> = ({ note, tripId, editingUsers = []
     if (isDragging) {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
-      document.addEventListener('touchmove', handleTouchMove);
+      document.addEventListener('touchmove', handleTouchMove, { passive: false });
       document.addEventListener('touchend', handleTouchEnd);
       
       return () => {

@@ -55,7 +55,7 @@ const UserPresenceIndicator: React.FC<UserPresenceIndicatorProps> = ({
     <div className="relative">
       {/* Active Users Display */}
       <div 
-        className="flex items-center space-x-1 sm:space-x-2 bg-white/80 backdrop-blur-sm border border-white/20 rounded-lg px-2 py-1 sm:px-3 sm:py-2 cursor-pointer hover:bg-white/90 transition-colors"
+        className="flex items-center space-x-1 sm:space-x-2 bg-white/80 backdrop-blur-sm border border-white/20 rounded-lg px-2 py-1 sm:px-3 sm:py-2 cursor-pointer hover:bg-white/90 transition-colors min-h-[40px]"
         onClick={() => setShowUserList(!showUserList)}
       >
         <div className="flex -space-x-1 sm:-space-x-2">
@@ -91,76 +91,90 @@ const UserPresenceIndicator: React.FC<UserPresenceIndicatorProps> = ({
 
       {/* User List Dropdown - Fixed z-index and positioning */}
       {showUserList && (
-        <div className="absolute top-full right-0 mt-2 w-64 sm:w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-[60]">
-          <div className="p-3 sm:p-4 border-b border-gray-200">
-            <h3 className="font-semibold text-gray-900 text-sm sm:text-base">Active Collaborators</h3>
-            <p className="text-xs sm:text-sm text-gray-600">Manage roles and permissions</p>
-          </div>
-          
-          <div className="max-h-48 sm:max-h-64 overflow-y-auto">
-            {activeUsers.map((user) => {
-              const ActionIcon = getActionIcon(user.currentAction);
-              const RoleIcon = getRoleIcon(user.role);
-              const isCurrentUser = user.userId === currentUserId;
+        <div className="fixed inset-0 z-[100] sm:absolute sm:inset-auto sm:top-full sm:right-0 sm:mt-2 sm:w-64 md:w-80">
+          <div className="sm:hidden absolute inset-0 bg-black/30" onClick={() => setShowUserList(false)}></div>
+          <div className="relative sm:static w-full h-full sm:h-auto flex items-end sm:block">
+            <div className="w-full max-h-[80vh] sm:max-h-none bg-white rounded-t-xl sm:rounded-xl shadow-xl border border-gray-200 overflow-hidden sm:w-64 md:w-80">
+              <div className="p-3 sm:p-4 border-b border-gray-200">
+                <h3 className="font-semibold text-gray-900 text-sm sm:text-base">Active Collaborators</h3>
+                <p className="text-xs sm:text-sm text-gray-600">Manage roles and permissions</p>
+              </div>
               
-              return (
-                <div
-                  key={user.userId}
-                  className="flex items-center justify-between p-2 sm:p-3 hover:bg-gray-50 transition-colors"
-                >
-                  <div className="flex items-center space-x-2 sm:space-x-3">
-                    <div className="relative">
-                      <img
-                        src={user.userAvatar || 'https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=40&h=40&dpr=2'}
-                        alt={user.userName}
-                        className="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover"
-                      />
-                      <div className="absolute -bottom-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-green-500 border-2 border-white rounded-full"></div>
-                    </div>
-                    
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center space-x-2">
-                        <span className="font-medium text-gray-900 text-xs sm:text-sm truncate max-w-[100px] sm:max-w-none">
-                          {user.userName}
-                          {isCurrentUser && <span className="text-gray-500"> (You)</span>}
-                        </span>
-                        <div className={`flex items-center space-x-1 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full text-xs font-medium ${getRoleColor(user.role)}`}>
-                          <RoleIcon className="h-2 w-2 sm:h-3 sm:w-3" />
-                          <span className="capitalize">{user.role || 'member'}</span>
+              <div className="max-h-[60vh] sm:max-h-64 overflow-y-auto">
+                {activeUsers.map((user) => {
+                  const ActionIcon = getActionIcon(user.currentAction);
+                  const RoleIcon = getRoleIcon(user.role);
+                  const isCurrentUser = user.userId === currentUserId;
+                  
+                  return (
+                    <div
+                      key={user.userId}
+                      className="flex items-center justify-between p-2 sm:p-3 hover:bg-gray-50 transition-colors"
+                    >
+                      <div className="flex items-center space-x-2 sm:space-x-3">
+                        <div className="relative">
+                          <img
+                            src={user.userAvatar || 'https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=40&h=40&dpr=2'}
+                            alt={user.userName}
+                            className="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover"
+                          />
+                          <div className="absolute -bottom-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-green-500 border-2 border-white rounded-full"></div>
+                        </div>
+                        
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center space-x-2">
+                            <span className="font-medium text-gray-900 text-xs sm:text-sm truncate max-w-[100px] sm:max-w-none">
+                              {user.userName}
+                              {isCurrentUser && <span className="text-gray-500"> (You)</span>}
+                            </span>
+                            <div className={`flex items-center space-x-1 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full text-xs font-medium ${getRoleColor(user.role)}`}>
+                              <RoleIcon className="h-2 w-2 sm:h-3 sm:w-3" />
+                              <span className="capitalize">{user.role || 'member'}</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-1 text-xs text-gray-500">
+                            <ActionIcon className="h-2 w-2 sm:h-3 sm:w-3" />
+                            <span className="truncate">{user.currentAction || 'viewing board'}</span>
+                          </div>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-1 text-xs text-gray-500">
-                        <ActionIcon className="h-2 w-2 sm:h-3 sm:w-3" />
-                        <span className="truncate">{user.currentAction || 'viewing board'}</span>
-                      </div>
-                    </div>
-                  </div>
 
-                  {/* Role Management (Owner Only) */}
-                  {isOwner && !isCurrentUser && user.role !== 'owner' && (
-                    <div className="flex items-center space-x-1">
-                      <select
-                        value={user.role || 'viewer'}
-                        onChange={(e) => onRoleChange?.(user.userId, e.target.value as 'viewer' | 'editor')}
-                        className="text-xs border border-gray-300 rounded px-1 py-0.5 sm:px-2 sm:py-1 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      >
-                        <option value="viewer">Viewer</option>
-                        <option value="editor">Editor</option>
-                      </select>
-                      
-                      <button
-                        onClick={() => onRemoveUser?.(user.userId)}
-                        className="p-1 text-gray-400 hover:text-red-600 transition-colors"
-                        title="Remove user"
-                        aria-label="Remove user"
-                      >
-                        <Shield className="h-3 w-3 sm:h-4 sm:w-4" />
-                      </button>
+                      {/* Role Management (Owner Only) */}
+                      {isOwner && !isCurrentUser && user.role !== 'owner' && (
+                        <div className="flex items-center space-x-1">
+                          <select
+                            value={user.role || 'viewer'}
+                            onChange={(e) => onRoleChange?.(user.userId, e.target.value as 'viewer' | 'editor')}
+                            className="text-xs border border-gray-300 rounded px-1 py-0.5 sm:px-2 sm:py-1 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          >
+                            <option value="viewer">Viewer</option>
+                            <option value="editor">Editor</option>
+                          </select>
+                          
+                          <button
+                            onClick={() => onRemoveUser?.(user.userId)}
+                            className="p-1 text-gray-400 hover:text-red-600 transition-colors min-h-[30px] min-w-[30px] flex items-center justify-center"
+                            title="Remove user"
+                            aria-label="Remove user"
+                          >
+                            <Shield className="h-3 w-3 sm:h-4 sm:w-4" />
+                          </button>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              );
-            })}
+                  );
+                })}
+              </div>
+              
+              <div className="p-3 sm:p-4 border-t border-gray-200">
+                <button 
+                  onClick={() => setShowUserList(false)}
+                  className="w-full py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

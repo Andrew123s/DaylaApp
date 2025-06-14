@@ -69,6 +69,8 @@ const TripPlanner: React.FC = () => {
   const [mediaModalType, setMediaModalType] = useState<'image' | 'voice' | 'link'>('image');
   
   const plannerRef = useRef<HTMLDivElement>(null);
+  const emojiButtonRef = useRef<HTMLButtonElement>(null);
+  const emojiPickerRef = useRef<HTMLDivElement>(null);
 
   const trip = trips.find(t => t.id === id);
 
@@ -93,6 +95,26 @@ const TripPlanner: React.FC = () => {
       return () => clearInterval(interval);
     }
   }, [trip, user, updateUserActivity]);
+
+  // Close emoji picker when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        showEmojiPicker &&
+        emojiPickerRef.current &&
+        emojiButtonRef.current &&
+        !emojiPickerRef.current.contains(event.target as Node) &&
+        !emojiButtonRef.current.contains(event.target as Node)
+      ) {
+        setShowEmojiPicker(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showEmojiPicker]);
 
   if (!trip) {
     return (
@@ -194,10 +216,10 @@ const TripPlanner: React.FC = () => {
 
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-sm border-b border-white/20 p-3 sm:p-4">
-        <div className="flex items-center justify-between mb-3 sm:mb-4">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-3 sm:mb-4">
           <div className="flex items-center space-x-2 sm:space-x-4">
             <div
-              className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-white shadow-sm"
+              className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-white shadow-sm flex-shrink-0"
               style={{ backgroundColor: trip.color }}
             />
             <div>
@@ -206,7 +228,7 @@ const TripPlanner: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center space-x-1 sm:space-x-2">
+          <div className="flex flex-wrap items-center gap-1 sm:gap-2">
             {/* User Presence Indicator */}
             <UserPresenceIndicator
               activeUsers={[...activeUsers, ...(user ? [{
@@ -228,7 +250,7 @@ const TripPlanner: React.FC = () => {
             <div className="relative">
               <button
                 onClick={() => setShowNotifications(!showNotifications)}
-                className="relative p-1 sm:p-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+                className="relative p-1 sm:p-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center"
                 aria-label="Notifications"
               >
                 <Bell className="h-4 w-4" />
@@ -273,61 +295,34 @@ const TripPlanner: React.FC = () => {
             {/* Invite Friends - Mobile */}
             <button
               onClick={() => setShowInviteModal(true)}
-              className="sm:hidden p-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="p-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center"
               aria-label="Invite Friends"
             >
               <UserPlus className="h-4 w-4" />
             </button>
 
-            {/* Invite Friends - Desktop */}
-            <button
-              onClick={() => setShowInviteModal(true)}
-              className="hidden sm:flex items-center space-x-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              <UserPlus className="h-4 w-4" />
-              <span className="text-sm">Invite Friends</span>
-            </button>
-
             {/* Schedule Button - Mobile */}
             <button 
               onClick={() => setShowScheduleModal(true)}
-              className="sm:hidden p-1 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+              className="p-1 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center"
               aria-label="Schedule"
             >
               <Calendar className="h-4 w-4" />
             </button>
 
-            {/* Schedule Button - Desktop */}
-            <button 
-              onClick={() => setShowScheduleModal(true)}
-              className="hidden sm:flex items-center space-x-2 px-3 py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
-            >
-              <Calendar className="h-4 w-4" />
-              <span className="text-sm">Schedule</span>
-            </button>
-
             {/* Share Button - Mobile */}
             <button 
               onClick={() => setShowShareModal(true)}
-              className="sm:hidden p-1 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+              className="p-1 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center"
               aria-label="Share"
             >
               <Share2 className="h-4 w-4" />
             </button>
 
-            {/* Share Button - Desktop */}
-            <button 
-              onClick={() => setShowShareModal(true)}
-              className="hidden sm:flex items-center space-x-2 px-3 py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
-            >
-              <Share2 className="h-4 w-4" />
-              <span className="text-sm">Share</span>
-            </button>
-
             {/* Settings Button */}
             <button 
               onClick={() => setShowSettingsModal(true)}
-              className="p-1 sm:p-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+              className="p-1 sm:p-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center"
               aria-label="Settings"
             >
               <Settings className="h-4 w-4" />
@@ -336,14 +331,14 @@ const TripPlanner: React.FC = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center space-x-1 bg-gray-100 p-1 rounded-lg w-full sm:w-fit overflow-x-auto scrollbar-thin">
+        <div className="flex items-center space-x-1 bg-gray-100 p-1 rounded-lg overflow-x-auto scrollbar-thin scroll-smooth snap-x">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as 'planning' | 'budget' | 'sustainability' | 'packing')}
-                className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 whitespace-nowrap ${
+                className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 whitespace-nowrap snap-start min-h-[40px] ${
                   activeTab === tab.id
                     ? 'bg-white text-blue-600 shadow-sm'
                     : 'text-gray-600 hover:text-gray-900'
@@ -358,8 +353,8 @@ const TripPlanner: React.FC = () => {
 
         {/* Planning Tools */}
         {activeTab === 'planning' && (
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between mt-3 sm:mt-4 space-y-3 sm:space-y-0">
-            <div className="flex items-center space-x-2 sm:space-x-4 overflow-x-auto scrollbar-thin pb-1">
+          <div className="mt-3 sm:mt-4 space-y-3 sm:space-y-0">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-4">
               <div className="flex items-center space-x-1 sm:space-x-2 whitespace-nowrap">
                 <span className="text-xs sm:text-sm font-medium text-gray-700">Color:</span>
                 <div className="flex space-x-1">
@@ -381,14 +376,18 @@ const TripPlanner: React.FC = () => {
 
               <div className="flex items-center space-x-1 sm:space-x-2 relative">
                 <button
+                  ref={emojiButtonRef}
                   onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                  className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+                  className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors min-h-[40px]"
                 >
                   <span className="text-base sm:text-lg">{selectedEmoji || '😊'}</span>
                   <span className="text-xs sm:text-sm">Emoji</span>
                 </button>
                 {showEmojiPicker && (
-                  <div className="absolute top-full left-0 z-50 mt-1">
+                  <div 
+                    ref={emojiPickerRef}
+                    className="absolute top-full left-0 z-50 mt-1"
+                  >
                     <EmojiPicker
                       onEmojiSelect={(emoji) => {
                         setSelectedEmoji(emoji);
@@ -401,14 +400,14 @@ const TripPlanner: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-2 overflow-x-auto scrollbar-thin pb-1">
+            <div className="flex flex-wrap items-center gap-2">
               {/* Image Button */}
               <button 
                 onClick={() => {
                   setMediaModalType('image');
                   setShowMediaModal(true);
                 }}
-                className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1 sm:py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+                className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1 sm:py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors min-h-[40px]"
               >
                 <Image className="h-3 w-3 sm:h-4 sm:w-4" />
                 <span className="text-xs sm:text-sm">Image</span>
@@ -420,7 +419,7 @@ const TripPlanner: React.FC = () => {
                   setMediaModalType('voice');
                   setShowMediaModal(true);
                 }}
-                className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1 sm:py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+                className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1 sm:py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors min-h-[40px]"
               >
                 <Mic className="h-3 w-3 sm:h-4 sm:w-4" />
                 <span className="text-xs sm:text-sm">Voice</span>
@@ -432,7 +431,7 @@ const TripPlanner: React.FC = () => {
                   setMediaModalType('link');
                   setShowMediaModal(true);
                 }}
-                className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1 sm:py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+                className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1 sm:py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors min-h-[40px]"
               >
                 <LinkIcon className="h-3 w-3 sm:h-4 sm:w-4" />
                 <span className="text-xs sm:text-sm">Link</span>
