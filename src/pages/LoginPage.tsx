@@ -123,7 +123,7 @@ const LoginPage: React.FC = () => {
           {/* Demo Account */}
           <div className="mt-6 p-4 bg-blue-50 rounded-lg">
             <p className="text-sm text-blue-800 text-center">
-              Demo: Use <strong>admin@example.com</strong> and any password to access the admin panel
+              never <strong>doubt</strong> yourself you are amazing
             </p>
           </div>
         </div>
