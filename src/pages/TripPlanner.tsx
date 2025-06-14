@@ -379,7 +379,7 @@ const TripPlanner: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-center space-x-1 sm:space-x-2">
+              <div className="flex items-center space-x-1 sm:space-x-2 relative">
                 <button
                   onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                   className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
@@ -388,13 +388,15 @@ const TripPlanner: React.FC = () => {
                   <span className="text-xs sm:text-sm">Emoji</span>
                 </button>
                 {showEmojiPicker && (
-                  <EmojiPicker
-                    onEmojiSelect={(emoji) => {
-                      setSelectedEmoji(emoji);
-                      setShowEmojiPicker(false);
-                    }}
-                    onClose={() => setShowEmojiPicker(false)}
-                  />
+                  <div className="absolute top-full left-0 z-50 mt-1">
+                    <EmojiPicker
+                      onEmojiSelect={(emoji) => {
+                        setSelectedEmoji(emoji);
+                        setShowEmojiPicker(false);
+                      }}
+                      onClose={() => setShowEmojiPicker(false)}
+                    />
+                  </div>
                 )}
               </div>
             </div>

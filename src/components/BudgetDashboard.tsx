@@ -69,7 +69,7 @@ const BudgetDashboard: React.FC<BudgetDashboardProps> = ({ tripId }) => {
 
   if (!trip) return null;
 
-  if (!budget) {
+  if (!budget && !isLoading) {
     return <BudgetSetup tripId={tripId} onSetup={() => setShowBudgetSetup(false)} />;
   }
 
@@ -316,6 +316,10 @@ const BudgetDashboard: React.FC<BudgetDashboardProps> = ({ tripId }) => {
                   await deleteExpense(tripId, expense.id);
                   await loadExpenses();
                 }}
+                onToggleStatus={async (status) => {
+                  await settleExpense(tripId, expense.id, status);
+                  await loadExpenses();
+                }}
                 onSettle={(userId) => settleExpense(tripId, expense.id, userId)}
                 onPayment={handlePayment}
                 currency={budget.currency}
@@ -438,6 +442,7 @@ interface ExpenseItemProps {
   onCancelEdit: () => void;
   onSave: (updates: any) => void;
   onDelete: () => void;
+  onToggleStatus: (status: 'packed' | 'purchased' | 'missing') => void;
   onSettle: (userId: string) => void;
   onPayment: (amount: number, description: string, expenseId?: string, splitId?: string) => void;
   currency: string;
@@ -529,7 +534,7 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({
 
   return (
     <div className="p-4 sm:p-6 hover:bg-gray-50 transition-colors">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0">
         <div className="flex items-start space-x-3 sm:space-x-4">
           <div 
             className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full mt-1"

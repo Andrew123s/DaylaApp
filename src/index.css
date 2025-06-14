@@ -293,10 +293,23 @@
   a {
     min-height: 44px;
     min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
   
   /* Fix for mobile sticky notes */
   .touch-manipulation {
     touch-action: manipulation;
+  }
+  
+  /* Fix for tab navigation */
+  .scrollbar-thin {
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .scrollbar-thin > * {
+    scroll-snap-align: start;
   }
 }
