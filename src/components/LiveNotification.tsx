@@ -67,7 +67,7 @@ const LiveNotification: React.FC<LiveNotificationProps> = ({ notifications, onDi
   if (visibleNotifications.length === 0) return null;
 
   return (
-    <div className="fixed top-20 right-4 z-50 space-y-2 max-w-sm">
+    <div className="fixed top-16 sm:top-20 right-2 sm:right-4 z-50 space-y-2 max-w-[calc(100vw-16px)] sm:max-w-sm">
       {visibleNotifications.map((notification) => {
         const Icon = getNotificationIcon(notification.type);
         const colorClass = getNotificationColor(notification.type);
@@ -75,29 +75,29 @@ const LiveNotification: React.FC<LiveNotificationProps> = ({ notifications, onDi
         return (
           <div
             key={notification.id}
-            className={`${colorClass} border rounded-lg p-4 shadow-lg backdrop-blur-sm animate-slide-in-right`}
+            className={`${colorClass} border rounded-lg p-3 sm:p-4 shadow-lg backdrop-blur-sm animate-slide-in-right`}
           >
-            <div className="flex items-start space-x-3">
+            <div className="flex items-start space-x-2 sm:space-x-3">
               <div className="flex-shrink-0">
                 {notification.userAvatar ? (
                   <img
                     src={notification.userAvatar}
                     alt={notification.userName}
-                    className="h-8 w-8 rounded-full object-cover"
+                    className="h-6 w-6 sm:h-8 sm:w-8 rounded-full object-cover"
                   />
                 ) : (
-                  <div className="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
-                    <Icon className="h-4 w-4 text-gray-600" />
+                  <div className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-gray-300 flex items-center justify-center">
+                    <Icon className="h-3 w-3 sm:h-4 sm:w-4 text-gray-600" />
                   </div>
                 )}
               </div>
               
               <div className="flex-1 min-w-0">
-                <div className="flex items-center space-x-2">
-                  <Icon className="h-4 w-4" />
-                  <span className="font-medium text-sm">{notification.userName}</span>
+                <div className="flex items-center space-x-1 sm:space-x-2">
+                  <Icon className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="font-medium text-xs sm:text-sm truncate">{notification.userName}</span>
                 </div>
-                <p className="text-sm mt-1">{notification.message}</p>
+                <p className="text-xs sm:text-sm mt-1 break-words">{notification.message}</p>
                 <p className="text-xs opacity-75 mt-1">
                   {new Date(notification.timestamp).toLocaleTimeString()}
                 </p>
@@ -106,8 +106,9 @@ const LiveNotification: React.FC<LiveNotificationProps> = ({ notifications, onDi
               <button
                 onClick={() => handleDismiss(notification.id)}
                 className="flex-shrink-0 p-1 hover:bg-black/10 rounded transition-colors"
+                aria-label="Dismiss notification"
               >
-                <X className="h-4 w-4" />
+                <X className="h-3 w-3 sm:h-4 sm:w-4" />
               </button>
             </div>
           </div>

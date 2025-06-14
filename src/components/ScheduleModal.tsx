@@ -106,24 +106,25 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-2xl max-w-6xl w-full h-[90vh] shadow-2xl flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <div className="flex items-center space-x-3">
-            <Calendar className="h-6 w-6 text-blue-600" />
-            <h2 className="text-2xl font-bold text-gray-900">Trip Schedule</h2>
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
+            <h2 className="text-lg sm:text-2xl font-bold text-gray-900">Trip Schedule</h2>
           </div>
           <div className="flex items-center space-x-2">
             <button
               onClick={() => setShowAddEvent(true)}
-              className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              className="flex items-center space-x-1 sm:space-x-2 bg-blue-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm"
             >
-              <Plus className="h-4 w-4" />
+              <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
               <span>Add Event</span>
             </button>
             <button
               onClick={onClose}
               className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
+              aria-label="Close"
             >
-              <X className="h-5 w-5" />
+              <X className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
           </div>
         </div>
@@ -131,26 +132,26 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
         {/* Content */}
         <div className="flex-1 overflow-hidden flex">
           {/* Calendar View */}
-          <div className="flex-1 p-6 overflow-y-auto">
-            <div className="grid gap-6">
+          <div className="flex-1 p-4 sm:p-6 overflow-y-auto">
+            <div className="grid gap-4 sm:gap-6">
               {getDaysInTrip().map((date, index) => {
                 const dayEvents = getEventsForDate(date);
                 return (
-                  <div key={index} className="bg-gray-50 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-lg font-semibold text-gray-900">
+                  <div key={index} className="bg-gray-50 rounded-lg p-3 sm:p-4">
+                    <div className="flex items-center justify-between mb-3 sm:mb-4">
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900">
                         {format(date, 'EEEE, MMMM d')}
                       </h3>
-                      <span className="text-sm text-gray-500">
+                      <span className="text-xs sm:text-sm text-gray-500">
                         Day {index + 1}
                       </span>
                     </div>
                     
-                    <div className="space-y-3">
+                    <div className="space-y-2 sm:space-y-3">
                       {dayEvents.length === 0 ? (
-                        <div className="text-center py-8 text-gray-500">
-                          <Calendar className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                          <p>No events scheduled</p>
+                        <div className="text-center py-6 sm:py-8 text-gray-500">
+                          <Calendar className="h-6 w-6 sm:h-8 sm:w-8 mx-auto mb-2 opacity-50" />
+                          <p className="text-sm">No events scheduled</p>
                         </div>
                       ) : (
                         dayEvents.map((event) => {
@@ -158,30 +159,30 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
                           return (
                             <div
                               key={event.id}
-                              className="bg-white rounded-lg p-4 border border-gray-200 hover:shadow-md transition-shadow"
+                              className="bg-white rounded-lg p-3 sm:p-4 border border-gray-200 hover:shadow-md transition-shadow"
                             >
                               <div className="flex items-start justify-between">
-                                <div className="flex items-start space-x-3">
-                                  <div className={`w-3 h-3 rounded-full mt-2 ${eventType?.color}`} />
+                                <div className="flex items-start space-x-2 sm:space-x-3">
+                                  <div className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full mt-1.5 ${eventType?.color}`} />
                                   <div className="flex-1">
                                     <div className="flex items-center space-x-2 mb-1">
-                                      <h4 className="font-medium text-gray-900">{event.title}</h4>
-                                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                                      <h4 className="font-medium text-gray-900 text-sm sm:text-base">{event.title}</h4>
+                                      <span className="text-xs bg-gray-100 text-gray-600 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded">
                                         {eventType?.label}
                                       </span>
                                     </div>
-                                    <p className="text-sm text-gray-600 mb-2">{event.description}</p>
-                                    <div className="flex items-center space-x-4 text-xs text-gray-500">
+                                    <p className="text-xs sm:text-sm text-gray-600 mb-2">{event.description}</p>
+                                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-500">
                                       <div className="flex items-center space-x-1">
-                                        <Clock className="h-3 w-3" />
+                                        <Clock className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                                         <span>{event.time}</span>
                                       </div>
                                       <div className="flex items-center space-x-1">
-                                        <MapPin className="h-3 w-3" />
+                                        <MapPin className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                                         <span>{event.location}</span>
                                       </div>
                                       <div className="flex items-center space-x-1">
-                                        <Users className="h-3 w-3" />
+                                        <Users className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                                         <span>{event.attendees.length} attendees</span>
                                       </div>
                                     </div>
@@ -191,14 +192,16 @@ const ScheduleModal: React.FC<ScheduleModalProps> = ({
                                   <button
                                     onClick={() => setEditingEvent(event.id)}
                                     className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+                                    aria-label="Edit event"
                                   >
-                                    <Edit3 className="h-4 w-4" />
+                                    <Edit3 className="h-3 w-3 sm:h-4 sm:w-4" />
                                   </button>
                                   <button
                                     onClick={() => deleteEvent(event.id)}
                                     className="p-1 text-gray-400 hover:text-red-600 transition-colors"
+                                    aria-label="Delete event"
                                   >
-                                    <Trash2 className="h-4 w-4" />
+                                    <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
                                   </button>
                                 </div>
                               </div>
@@ -286,22 +289,23 @@ const AddEventModal: React.FC<AddEventModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-[60]">
-      <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-bold text-gray-900">
+      <div className="bg-white rounded-2xl max-w-md w-full p-4 sm:p-6 shadow-2xl">
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900">
             {initialData ? 'Edit Event' : 'Add Event'}
           </h3>
           <button
             onClick={onClose}
             className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
+            aria-label="Close"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
               Event Title
             </label>
             <input
@@ -309,27 +313,27 @@ const AddEventModal: React.FC<AddEventModalProps> = ({
               value={formData.title}
               onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               placeholder="Enter event title"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
               Description
             </label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none text-sm"
               placeholder="Event description"
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                 Date
               </label>
               <input
@@ -339,12 +343,12 @@ const AddEventModal: React.FC<AddEventModalProps> = ({
                 min={format(tripStartDate, 'yyyy-MM-dd')}
                 max={format(tripEndDate, 'yyyy-MM-dd')}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                 Time
               </label>
               <input
@@ -352,32 +356,32 @@ const AddEventModal: React.FC<AddEventModalProps> = ({
                 value={formData.time}
                 onChange={(e) => setFormData(prev => ({ ...prev, time: e.target.value }))}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
               Location
             </label>
             <input
               type="text"
               value={formData.location}
               onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               placeholder="Event location"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
               Event Type
             </label>
             <select
               value={formData.type}
               onChange={(e) => setFormData(prev => ({ ...prev, type: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
             >
               {eventTypes.map((type) => (
                 <option key={type.value} value={type.value}>
@@ -387,17 +391,17 @@ const AddEventModal: React.FC<AddEventModalProps> = ({
             </select>
           </div>
 
-          <div className="flex space-x-3 pt-4">
+          <div className="flex space-x-3 pt-3 sm:pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              className="flex-1 px-3 py-1.5 sm:px-4 sm:py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="flex-1 px-3 py-1.5 sm:px-4 sm:py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
             >
               {initialData ? 'Update' : 'Add'} Event
             </button>

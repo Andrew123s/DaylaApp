@@ -157,25 +157,26 @@ const MediaUploadModal: React.FC<MediaUploadModalProps> = ({
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-2xl max-w-md w-full shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <div className="flex items-center space-x-3">
-            <Icon className="h-6 w-6 text-blue-600" />
-            <h2 className="text-xl font-bold text-gray-900">{getModalTitle()}</h2>
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900">{getModalTitle()}</h2>
           </div>
           <button
             onClick={onClose}
             className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
+            aria-label="Close"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           {type === 'link' ? (
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                   URL
                 </label>
                 <input
@@ -183,11 +184,11 @@ const MediaUploadModal: React.FC<MediaUploadModalProps> = ({
                   value={linkUrl}
                   onChange={(e) => setLinkUrl(e.target.value)}
                   placeholder="https://example.com"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                   Title (Optional)
                 </label>
                 <input
@@ -195,43 +196,43 @@ const MediaUploadModal: React.FC<MediaUploadModalProps> = ({
                   value={linkTitle}
                   onChange={(e) => setLinkTitle(e.target.value)}
                   placeholder="Link title"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 />
               </div>
             </div>
           ) : type === 'voice' ? (
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {/* Recording Interface */}
               <div className="text-center">
-                <div className={`w-24 h-24 rounded-full mx-auto mb-4 flex items-center justify-center ${
+                <div className={`w-16 h-16 sm:w-24 sm:h-24 rounded-full mx-auto mb-3 sm:mb-4 flex items-center justify-center ${
                   isRecording ? 'bg-red-100 animate-pulse' : 'bg-blue-100'
                 }`}>
-                  <Mic className={`h-12 w-12 ${isRecording ? 'text-red-600' : 'text-blue-600'}`} />
+                  <Mic className={`h-8 w-8 sm:h-12 sm:w-12 ${isRecording ? 'text-red-600' : 'text-blue-600'}`} />
                 </div>
                 
                 {isRecording ? (
                   <div>
-                    <div className="text-2xl font-mono font-bold text-red-600 mb-2">
+                    <div className="text-xl sm:text-2xl font-mono font-bold text-red-600 mb-2">
                       {formatTime(recordingTime)}
                     </div>
-                    <p className="text-sm text-gray-600 mb-4">Recording in progress...</p>
+                    <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">Recording in progress...</p>
                     <button
                       onClick={stopRecording}
-                      className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors"
+                      className="bg-red-600 text-white px-4 py-1.5 sm:px-6 sm:py-2 rounded-lg hover:bg-red-700 transition-colors text-sm"
                     >
                       Stop Recording
                     </button>
                   </div>
                 ) : selectedFiles.length > 0 ? (
                   <div>
-                    <Check className="h-8 w-8 text-green-600 mx-auto mb-2" />
-                    <p className="text-sm text-gray-600 mb-4">
+                    <Check className="h-6 w-6 sm:h-8 sm:w-8 text-green-600 mx-auto mb-2" />
+                    <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">
                       Recording ready: {selectedFiles[0].name}
                     </p>
                     <div className="flex space-x-2 justify-center">
                       <button
                         onClick={() => setSelectedFiles([])}
-                        className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                        className="px-3 py-1.5 sm:px-4 sm:py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm"
                       >
                         Record Again
                       </button>
@@ -239,12 +240,12 @@ const MediaUploadModal: React.FC<MediaUploadModalProps> = ({
                   </div>
                 ) : (
                   <div>
-                    <p className="text-sm text-gray-600 mb-4">
+                    <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">
                       Click to start recording your voice note
                     </p>
                     <button
                       onClick={startRecording}
-                      className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                      className="bg-blue-600 text-white px-4 py-1.5 sm:px-6 sm:py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm"
                     >
                       Start Recording
                     </button>
@@ -253,18 +254,18 @@ const MediaUploadModal: React.FC<MediaUploadModalProps> = ({
               </div>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {/* File Upload Area */}
               <div
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
-                className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 transition-colors cursor-pointer"
+                className="border-2 border-dashed border-gray-300 rounded-lg p-6 sm:p-8 text-center hover:border-blue-400 transition-colors cursor-pointer"
                 onClick={() => fileInputRef.current?.click()}
               >
                 {selectedFiles.length > 0 ? (
                   <div>
-                    <Check className="h-8 w-8 text-green-600 mx-auto mb-2" />
-                    <p className="text-sm text-gray-600">
+                    <Check className="h-6 w-6 sm:h-8 sm:w-8 text-green-600 mx-auto mb-2" />
+                    <p className="text-xs sm:text-sm text-gray-600">
                       {selectedFiles.length} file(s) selected
                     </p>
                     <div className="mt-2 space-y-1">
@@ -277,9 +278,9 @@ const MediaUploadModal: React.FC<MediaUploadModalProps> = ({
                   </div>
                 ) : (
                   <div>
-                    <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                    <p className="text-sm text-gray-600 mb-1">
-                      Drop files here or click to browse
+                    <Upload className="h-6 w-6 sm:h-8 sm:w-8 text-gray-400 mx-auto mb-2" />
+                    <p className="text-xs sm:text-sm text-gray-600 mb-1">
+                      Drop files here or tap to browse
                     </p>
                     <p className="text-xs text-gray-500">
                       Supports JPG, PNG, GIF up to 10MB
@@ -304,9 +305,9 @@ const MediaUploadModal: React.FC<MediaUploadModalProps> = ({
                     // In a real app, this would open camera
                     console.log('Opening camera...');
                   }}
-                  className="w-full flex items-center justify-center space-x-2 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="w-full flex items-center justify-center space-x-2 p-2 sm:p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-sm"
                 >
-                  <Camera className="h-5 w-5" />
+                  <Camera className="h-4 w-4 sm:h-5 sm:w-5" />
                   <span>Take Photo</span>
                 </button>
               )}
@@ -315,14 +316,14 @@ const MediaUploadModal: React.FC<MediaUploadModalProps> = ({
 
           {/* Upload Progress */}
           {uploadState === 'uploading' && (
-            <div className="mt-4">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-gray-600">Uploading...</span>
-                <span className="text-sm text-gray-600">{uploadProgress}%</span>
+            <div className="mt-3 sm:mt-4">
+              <div className="flex items-center justify-between mb-1 sm:mb-2">
+                <span className="text-xs sm:text-sm text-gray-600">Uploading...</span>
+                <span className="text-xs sm:text-sm text-gray-600">{uploadProgress}%</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
+              <div className="w-full bg-gray-200 rounded-full h-1.5 sm:h-2">
                 <div 
-                  className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+                  className="bg-blue-600 h-1.5 sm:h-2 rounded-full transition-all duration-300"
                   style={{ width: `${uploadProgress}%` }}
                 />
               </div>
@@ -331,20 +332,20 @@ const MediaUploadModal: React.FC<MediaUploadModalProps> = ({
 
           {/* Success State */}
           {uploadState === 'success' && (
-            <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+            <div className="mt-3 sm:mt-4 p-2 sm:p-3 bg-green-50 border border-green-200 rounded-lg">
               <div className="flex items-center space-x-2">
-                <Check className="h-5 w-5 text-green-600" />
-                <span className="text-sm text-green-800">Upload successful!</span>
+                <Check className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
+                <span className="text-xs sm:text-sm text-green-800">Upload successful!</span>
               </div>
             </div>
           )}
 
           {/* Error State */}
           {uploadState === 'error' && (
-            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+            <div className="mt-3 sm:mt-4 p-2 sm:p-3 bg-red-50 border border-red-200 rounded-lg">
               <div className="flex items-center space-x-2">
-                <AlertCircle className="h-5 w-5 text-red-600" />
-                <span className="text-sm text-red-800">Upload failed. Please try again.</span>
+                <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-red-600" />
+                <span className="text-xs sm:text-sm text-red-800">Upload failed. Please try again.</span>
               </div>
             </div>
           )}
@@ -352,10 +353,10 @@ const MediaUploadModal: React.FC<MediaUploadModalProps> = ({
 
         {/* Footer */}
         {uploadState !== 'uploading' && uploadState !== 'success' && (
-          <div className="flex space-x-3 p-6 border-t border-gray-200">
+          <div className="flex space-x-3 p-4 sm:p-6 border-t border-gray-200">
             <button
               onClick={onClose}
-              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              className="flex-1 px-3 py-1.5 sm:px-4 sm:py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm"
             >
               Cancel
             </button>
@@ -365,7 +366,7 @@ const MediaUploadModal: React.FC<MediaUploadModalProps> = ({
                 (type === 'link' && !linkUrl) ||
                 (type !== 'link' && selectedFiles.length === 0)
               }
-              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex-1 px-3 py-1.5 sm:px-4 sm:py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
             >
               {type === 'link' ? 'Add Link' : 'Upload'}
             </button>

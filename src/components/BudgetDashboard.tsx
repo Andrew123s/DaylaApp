@@ -131,29 +131,29 @@ const BudgetDashboard: React.FC<BudgetDashboardProps> = ({ tripId }) => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Budget Overview */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
         {/* Total Budget Card */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-white/20 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">Total Budget</h3>
-            <DollarSign className="h-6 w-6 text-green-600" />
+        <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-white/20 shadow-sm">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900">Total Budget</h3>
+            <DollarSign className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
           </div>
-          <div className="space-y-3">
-            <div className="text-3xl font-bold text-gray-900">
+          <div className="space-y-2 sm:space-y-3">
+            <div className="text-xl sm:text-3xl font-bold text-gray-900">
               {budget.currency} {budget.totalBudget.toLocaleString()}
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-3">
+            <div className="w-full bg-gray-200 rounded-full h-2 sm:h-3">
               <div 
-                className={`h-3 rounded-full transition-all duration-300 ${
+                className={`h-full rounded-full transition-all duration-300 ${
                   spentPercentage > 90 ? 'bg-red-500' : 
                   spentPercentage > 75 ? 'bg-yellow-500' : 'bg-green-500'
                 }`}
                 style={{ width: `${Math.min(spentPercentage, 100)}%` }}
               />
             </div>
-            <div className="flex justify-between text-sm">
+            <div className="flex justify-between text-xs sm:text-sm">
               <span className="text-gray-600">
                 Spent: {budget.currency} {totalSpent.toLocaleString()}
               </span>
@@ -165,22 +165,22 @@ const BudgetDashboard: React.FC<BudgetDashboardProps> = ({ tripId }) => {
         </div>
 
         {/* Expense Breakdown Chart */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-white/20 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">By Category</h3>
-            <PieChart className="h-6 w-6 text-blue-600" />
+        <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-white/20 shadow-sm">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900">By Category</h3>
+            <PieChart className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
           </div>
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             {budget.categoryBudgets.map((category) => (
               <div key={category.category} className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2 sm:space-x-3">
                   <div 
-                    className="w-3 h-3 rounded-full"
+                    className="w-2 h-2 sm:w-3 sm:h-3 rounded-full"
                     style={{ backgroundColor: category.color }}
                   />
-                  <span className="text-sm text-gray-700">{category.category}</span>
+                  <span className="text-xs sm:text-sm text-gray-700">{category.category}</span>
                 </div>
-                <span className="text-sm font-medium text-gray-900">
+                <span className="text-xs sm:text-sm font-medium text-gray-900">
                   {budget.currency} {category.spent.toLocaleString()}
                 </span>
               </div>
@@ -189,12 +189,12 @@ const BudgetDashboard: React.FC<BudgetDashboardProps> = ({ tripId }) => {
         </div>
 
         {/* Per Person Summary */}
-        <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-white/20 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">Per Person</h3>
-            <Users className="h-6 w-6 text-purple-600" />
+        <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-white/20 shadow-sm">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900">Per Person</h3>
+            <Users className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600" />
           </div>
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3 max-h-[150px] overflow-y-auto">
             {trip.collaborators.map((collaboratorId, index) => {
               const userExpenses = expenses.filter(exp => exp.paid_by === collaboratorId);
               const totalPaid = userExpenses.reduce((sum, exp) => sum + exp.amount, 0);
@@ -205,18 +205,18 @@ const BudgetDashboard: React.FC<BudgetDashboardProps> = ({ tripId }) => {
               
               return (
                 <div key={collaboratorId} className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-2 sm:space-x-3">
                     <img
                       src="https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=32&h=32&dpr=2"
                       alt="User"
-                      className="w-6 h-6 rounded-full object-cover"
+                      className="w-5 h-5 sm:w-6 sm:h-6 rounded-full object-cover"
                     />
-                    <span className="text-sm text-gray-700">
+                    <span className="text-xs sm:text-sm text-gray-700">
                       {index === 0 ? user?.name : `User ${index + 1}`}
                     </span>
                   </div>
                   <div className="text-right">
-                    <div className="text-sm font-medium text-gray-900">
+                    <div className="text-xs sm:text-sm font-medium text-gray-900">
                       Paid: {budget.currency} {totalPaid.toLocaleString()}
                     </div>
                     <div className="text-xs text-gray-500">
@@ -231,20 +231,20 @@ const BudgetDashboard: React.FC<BudgetDashboardProps> = ({ tripId }) => {
       </div>
 
       {/* Actions Bar */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between space-y-3 sm:space-y-0">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4">
           <button
             onClick={() => setShowAddExpense(true)}
-            className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200"
+            className="flex items-center space-x-1 sm:space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 text-sm"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-3 w-3 sm:h-4 sm:w-4" />
             <span>Add Expense</span>
           </button>
           
           <select
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-2 py-1.5 sm:px-3 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs sm:text-sm"
           >
             <option value="all">All Categories</option>
             {categories.map(category => (
@@ -255,7 +255,7 @@ const BudgetDashboard: React.FC<BudgetDashboardProps> = ({ tripId }) => {
           <select
             value={filterPerson}
             onChange={(e) => setFilterPerson(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-2 py-1.5 sm:px-3 sm:py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs sm:text-sm"
           >
             <option value="all">All People</option>
             {trip.collaborators.map((collaboratorId, index) => (
@@ -267,8 +267,8 @@ const BudgetDashboard: React.FC<BudgetDashboardProps> = ({ tripId }) => {
         </div>
 
         <div className="flex items-center space-x-2">
-          <Filter className="h-4 w-4 text-gray-400" />
-          <span className="text-sm text-gray-600">
+          <Filter className="h-3 w-3 sm:h-4 sm:w-4 text-gray-400" />
+          <span className="text-xs sm:text-sm text-gray-600">
             {filteredExpenses.length} of {expenses.length} expenses
           </span>
         </div>
@@ -276,24 +276,24 @@ const BudgetDashboard: React.FC<BudgetDashboardProps> = ({ tripId }) => {
 
       {/* Expenses List */}
       <div className="bg-white/80 backdrop-blur-sm rounded-xl border border-white/20 shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900">Recent Expenses</h3>
+        <div className="px-4 py-3 sm:px-6 sm:py-4 border-b border-gray-200">
+          <h3 className="text-base sm:text-lg font-semibold text-gray-900">Recent Expenses</h3>
         </div>
         
         <div className="divide-y divide-gray-200">
           {loading ? (
-            <div className="p-8 text-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+            <div className="p-6 sm:p-8 text-center">
+              <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-blue-600 mx-auto"></div>
               <p className="text-gray-600 mt-2">Loading expenses...</p>
             </div>
           ) : filteredExpenses.length === 0 ? (
-            <div className="p-8 text-center">
-              <Receipt className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No expenses yet</h3>
+            <div className="p-6 sm:p-8 text-center">
+              <Receipt className="h-8 w-8 sm:h-12 sm:w-12 text-gray-400 mx-auto mb-3 sm:mb-4" />
+              <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">No expenses yet</h3>
               <p className="text-gray-600 mb-4">Start tracking your trip expenses</p>
               <button
                 onClick={() => setShowAddExpense(true)}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                className="bg-blue-600 text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm"
               >
                 Add First Expense
               </button>
@@ -378,10 +378,10 @@ const BudgetSetup: React.FC<{ tripId: string; onSetup: () => void }> = ({ tripId
   };
 
   return (
-    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-8 border border-white/20 shadow-sm text-center">
-      <DollarSign className="h-16 w-16 text-blue-600 mx-auto mb-6" />
-      <h2 className="text-2xl font-bold text-gray-900 mb-4">Set Up Your Trip Budget</h2>
-      <p className="text-gray-600 mb-8">
+    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-white/20 shadow-sm text-center">
+      <DollarSign className="h-12 w-12 sm:h-16 sm:w-16 text-blue-600 mx-auto mb-4 sm:mb-6" />
+      <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4">Set Up Your Trip Budget</h2>
+      <p className="text-gray-600 mb-6 sm:mb-8 text-sm sm:text-base">
         Start tracking expenses by setting your total trip budget and currency.
       </p>
       
@@ -395,7 +395,7 @@ const BudgetSetup: React.FC<{ tripId: string; onSetup: () => void }> = ({ tripId
             value={totalBudget}
             onChange={(e) => setTotalBudget(e.target.value)}
             placeholder="Enter total budget"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
         
@@ -406,7 +406,7 @@ const BudgetSetup: React.FC<{ tripId: string; onSetup: () => void }> = ({ tripId
           <select
             value={currency}
             onChange={(e) => setCurrency(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="USD">USD - US Dollar</option>
             <option value="EUR">EUR - Euro</option>
@@ -420,7 +420,7 @@ const BudgetSetup: React.FC<{ tripId: string; onSetup: () => void }> = ({ tripId
         <button
           onClick={handleSetup}
           disabled={!totalBudget || parseFloat(totalBudget) <= 0 || loading}
-          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-lg hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 sm:py-3 px-4 rounded-lg hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 text-sm sm:text-base"
         >
           {loading ? 'Setting up...' : 'Set Up Budget'}
         </button>
@@ -476,26 +476,26 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({
 
   if (isEditing) {
     return (
-      <div className="p-6 bg-blue-50">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="p-4 sm:p-6 bg-blue-50">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
           <input
             type="number"
             value={editData.amount}
             onChange={(e) => setEditData(prev => ({ ...prev, amount: e.target.value }))}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
             placeholder="Amount"
           />
           <input
             type="text"
             value={editData.description}
             onChange={(e) => setEditData(prev => ({ ...prev, description: e.target.value }))}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
             placeholder="Description"
           />
           <select
             value={editData.category}
             onChange={(e) => setEditData(prev => ({ ...prev, category: e.target.value }))}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
           >
             <option value="Accommodation">Accommodation</option>
             <option value="Transportation">Transportation</option>
@@ -505,10 +505,10 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({
             <option value="Other">Other</option>
           </select>
         </div>
-        <div className="flex justify-end space-x-2 mt-4">
+        <div className="flex justify-end space-x-2 mt-3 sm:mt-4">
           <button
             onClick={onCancelEdit}
-            className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+            className="px-3 py-1.5 text-gray-600 hover:text-gray-800 transition-colors text-sm"
           >
             Cancel
           </button>
@@ -518,7 +518,7 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({
               description: editData.description,
               category: editData.category
             })}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
           >
             Save
           </button>
@@ -528,21 +528,21 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({
   }
 
   return (
-    <div className="p-6 hover:bg-gray-50 transition-colors">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
+    <div className="p-4 sm:p-6 hover:bg-gray-50 transition-colors">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex items-start space-x-3 sm:space-x-4">
           <div 
-            className="w-3 h-3 rounded-full"
+            className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full mt-1"
             style={{ backgroundColor: categoryColors[expense.category] || '#6B7280' }}
           />
           <div>
             <div className="flex items-center space-x-2">
-              <h4 className="font-medium text-gray-900">{expense.description}</h4>
+              <h4 className="font-medium text-gray-900 text-sm sm:text-base">{expense.description}</h4>
               {expense.receipt_image_url && (
-                <Camera className="h-4 w-4 text-gray-400" />
+                <Camera className="h-3 w-3 sm:h-4 sm:w-4 text-gray-400" />
               )}
             </div>
-            <div className="flex items-center space-x-4 text-sm text-gray-500 mt-1">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:text-sm text-gray-500 mt-1">
               <span className="flex items-center space-x-1">
                 <Calendar className="h-3 w-3" />
                 <span>{format(new Date(expense.expense_date), 'MMM dd, yyyy')}</span>
@@ -553,42 +553,42 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({
                   <span>{expense.location}</span>
                 </span>
               )}
-              <span className="px-2 py-1 bg-gray-100 text-gray-700 rounded-full text-xs">
+              <span className="px-1.5 py-0.5 sm:px-2 sm:py-1 bg-gray-100 text-gray-700 rounded-full text-xs">
                 {expense.category}
               </span>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-between sm:justify-end sm:space-x-4">
           <div className="text-right">
-            <div className="text-lg font-semibold text-gray-900">
+            <div className="text-base sm:text-lg font-semibold text-gray-900">
               {currency} {expense.amount.toLocaleString()}
             </div>
-            <div className="text-sm text-gray-500">
+            <div className="text-xs sm:text-sm text-gray-500">
               Split {expense.expense_splits?.length || 1} ways
             </div>
           </div>
 
           <div className="flex items-center space-x-2">
             {expense.is_settled ? (
-              <CheckCircle className="h-5 w-5 text-green-500" />
+              <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
             ) : (
-              <AlertCircle className="h-5 w-5 text-yellow-500" />
+              <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-500" />
             )}
             
             <button
               onClick={onEdit}
               className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
             >
-              <Edit3 className="h-4 w-4" />
+              <Edit3 className="h-3 w-3 sm:h-4 sm:w-4" />
             </button>
             
             <button
               onClick={onDelete}
               className="p-1 text-gray-400 hover:text-red-600 transition-colors"
             >
-              <Trash2 className="h-4 w-4" />
+              <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
             </button>
           </div>
         </div>
@@ -596,14 +596,14 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({
 
       {/* Split Details with Individual Pay Buttons */}
       {expense.expense_splits && expense.expense_splits.length > 0 && (
-        <div className="mt-4 pt-4 border-t border-gray-200">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-gray-600">Split between:</span>
-            <div className="flex -space-x-2">
+        <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-200">
+          <div className="flex items-center justify-between mb-2 sm:mb-3">
+            <span className="text-xs sm:text-sm text-gray-600">Split between:</span>
+            <div className="flex -space-x-1 sm:-space-x-2">
               {expense.expense_splits.map((split: any, index: number) => (
                 <div
                   key={split.id}
-                  className={`relative w-8 h-8 rounded-full border-2 border-white ${
+                  className={`relative w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 border-white ${
                     split.is_settled ? 'opacity-100' : 'opacity-60'
                   }`}
                   title={`${split.user_profiles?.name || 'User'}: ${currency} ${split.amount} ${split.is_settled ? '(Settled)' : '(Pending)'}`}
@@ -614,7 +614,7 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({
                     className="w-full h-full rounded-full object-cover"
                   />
                   {split.is_settled && (
-                    <CheckCircle className="absolute -bottom-1 -right-1 h-3 w-3 text-green-500 bg-white rounded-full" />
+                    <CheckCircle className="absolute -bottom-1 -right-1 h-2.5 w-2.5 sm:h-3 sm:w-3 text-green-500 bg-white rounded-full" />
                   )}
                 </div>
               ))}
@@ -625,33 +625,33 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({
           <div className="space-y-2">
             {expense.expense_splits.map((split: any) => (
               <div key={split.id} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2 sm:space-x-3">
                   <img
                     src={split.user_profiles?.avatar_url || "https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=24&h=24&dpr=2"}
                     alt={split.user_profiles?.name || 'User'}
-                    className="w-6 h-6 rounded-full object-cover"
+                    className="w-5 h-5 sm:w-6 sm:h-6 rounded-full object-cover"
                   />
-                  <span className="text-sm font-medium text-gray-900">{split.user_profiles?.name || 'User'}</span>
-                  <span className="text-sm text-gray-600">
+                  <span className="text-xs sm:text-sm font-medium text-gray-900">{split.user_profiles?.name || 'User'}</span>
+                  <span className="text-xs sm:text-sm text-gray-600">
                     {currency} {split.amount.toFixed(2)}
                   </span>
                 </div>
                 
                 <div className="flex items-center space-x-2">
                   {split.is_settled ? (
-                    <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                    <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 sm:py-1 rounded-full">
                       Paid ✓
                     </span>
                   ) : split.user_id === user?.id ? (
                     <button
                       onClick={() => onPayment(split.amount, `Payment for ${expense.description}`, expense.id, split.id)}
                       disabled={isProcessingPayment}
-                      className="text-xs bg-blue-600 text-white px-3 py-1 rounded-full hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                      className="text-xs bg-blue-600 text-white px-2 py-0.5 sm:px-3 sm:py-1 rounded-full hover:bg-blue-700 disabled:opacity-50 transition-colors"
                     >
                       {isProcessingPayment ? 'Processing...' : `Pay ${currency} ${split.amount.toFixed(2)}`}
                     </button>
                   ) : (
-                    <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
+                    <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-0.5 sm:py-1 rounded-full">
                       Pending
                     </span>
                   )}
@@ -662,10 +662,10 @@ const ExpenseItem: React.FC<ExpenseItemProps> = ({
 
           {/* Mark as Settled Button */}
           {!expense.is_settled && user && (
-            <div className="mt-3 flex justify-end">
+            <div className="mt-2 sm:mt-3 flex justify-end">
               <button
                 onClick={() => onSettle(user.id)}
-                className="text-sm bg-green-100 text-green-800 px-3 py-1 rounded-full hover:bg-green-200 transition-colors"
+                className="text-xs sm:text-sm bg-green-100 text-green-800 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full hover:bg-green-200 transition-colors"
               >
                 Mark as Settled
               </button>
@@ -746,21 +746,22 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Add Expense</h2>
+      <div className="bg-white rounded-2xl max-w-2xl w-full p-4 sm:p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Add Expense</h2>
           <button
             onClick={onClose}
             className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
+            aria-label="Close"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                 Amount ({currency})
               </label>
               <input
@@ -769,19 +770,19 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
                 value={formData.amount}
                 onChange={(e) => setFormData(prev => ({ ...prev, amount: e.target.value }))}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 placeholder="0.00"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                 Category
               </label>
               <select
                 value={formData.category}
                 onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               >
                 {categories.map(category => (
                   <option key={category} value={category}>{category}</option>
@@ -791,7 +792,7 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
               Description
             </label>
             <input
@@ -799,46 +800,46 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
               value={formData.description}
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               placeholder="What was this expense for?"
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                 Date
               </label>
               <input
                 type="date"
                 value={formData.date}
                 onChange={(e) => setFormData(prev => ({ ...prev, date: e.target.value }))}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                 Location (Optional)
               </label>
               <input
                 type="text"
                 value={formData.location}
                 onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                 placeholder="Where was this expense?"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
               Paid By
             </label>
             <select
               value={formData.paidBy}
               onChange={(e) => setFormData(prev => ({ ...prev, paidBy: e.target.value }))}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
             >
               {collaborators.map((collaboratorId, index) => (
                 <option key={collaboratorId} value={collaboratorId}>
@@ -848,17 +849,17 @@ const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
             </select>
           </div>
 
-          <div className="flex space-x-3 pt-4">
+          <div className="flex space-x-3 pt-3 sm:pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              className="flex-1 px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200"
+              className="flex-1 px-3 py-2 sm:px-4 sm:py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 text-sm"
             >
               Add Expense
             </button>
@@ -905,34 +906,34 @@ const SettlementCenter: React.FC<{
     }));
 
   return (
-    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-white/20 shadow-sm">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-gray-900">Settlement Center</h3>
-        <CreditCard className="h-6 w-6 text-green-600" />
+    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-white/20 shadow-sm">
+      <div className="flex items-center justify-between mb-4 sm:mb-6">
+        <h3 className="text-base sm:text-lg font-semibold text-gray-900">Settlement Center</h3>
+        <CreditCard className="h-5 w-5 sm:h-6 sm:w-6 text-green-600" />
       </div>
 
       {settlements.length === 0 ? (
-        <div className="text-center py-8">
-          <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">All settled up!</h3>
-          <p className="text-gray-600">Everyone's expenses are balanced.</p>
+        <div className="text-center py-6 sm:py-8">
+          <CheckCircle className="h-8 w-8 sm:h-12 sm:w-12 text-green-500 mx-auto mb-3 sm:mb-4" />
+          <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">All settled up!</h3>
+          <p className="text-gray-600 text-sm sm:text-base">Everyone's expenses are balanced.</p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {settlements.map((settlement) => (
             <div
               key={settlement.userId}
-              className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+              className="flex items-center justify-between p-3 sm:p-4 bg-gray-50 rounded-lg"
             >
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-2 sm:space-x-3">
                 <img
                   src="https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=40&h=40&dpr=2"
                   alt={settlement.userName}
-                  className="w-10 h-10 rounded-full object-cover"
+                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
                 />
                 <div>
-                  <div className="font-medium text-gray-900">{settlement.userName}</div>
-                  <div className={`text-sm ${settlement.owes ? 'text-red-600' : 'text-green-600'}`}>
+                  <div className="font-medium text-gray-900 text-sm sm:text-base">{settlement.userName}</div>
+                  <div className={`text-xs sm:text-sm ${settlement.owes ? 'text-red-600' : 'text-green-600'}`}>
                     {settlement.owes ? 'Owes' : 'Is owed'} {budget.currency} {Math.abs(settlement.amount).toFixed(2)}
                   </div>
                 </div>
@@ -942,7 +943,7 @@ const SettlementCenter: React.FC<{
               {settlement.owes && settlement.userId === user.id && (
                 <button
                   onClick={() => onPayment(Math.abs(settlement.amount), `Settlement payment`)}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                  className="bg-blue-600 text-white px-2 py-1 sm:px-4 sm:py-2 rounded-lg hover:bg-blue-700 transition-colors text-xs sm:text-sm"
                 >
                   Pay Now
                 </button>
@@ -951,21 +952,21 @@ const SettlementCenter: React.FC<{
           ))}
 
           {paymentHistory && paymentHistory.length > 0 && (
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <h4 className="font-medium text-gray-900 mb-4">Recent Payments</h4>
+            <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gray-200">
+              <h4 className="font-medium text-gray-900 mb-3 sm:mb-4 text-sm sm:text-base">Recent Payments</h4>
               <div className="space-y-2">
                 {paymentHistory.slice(0, 5).map((payment) => (
                   <div
                     key={payment.id}
-                    className="flex items-center justify-between p-3 bg-green-50 rounded-lg"
+                    className="flex items-center justify-between p-2 sm:p-3 bg-green-50 rounded-lg"
                   >
-                    <div className="flex items-center space-x-3">
-                      <CheckCircle className="h-5 w-5 text-green-500" />
-                      <span className="text-sm text-gray-900">
+                    <div className="flex items-center space-x-2 sm:space-x-3">
+                      <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
+                      <span className="text-xs sm:text-sm text-gray-900">
                         Payment of {payment.currency} {payment.amount}
                       </span>
                     </div>
-                    <span className={`text-xs px-2 py-1 rounded-full ${
+                    <span className={`text-xs px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full ${
                       payment.status === 'completed' 
                         ? 'bg-green-100 text-green-800'
                         : payment.status === 'failed'

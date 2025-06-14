@@ -53,7 +53,8 @@
 
 /* Custom scrollbar for better UX */
 .scrollbar-thin::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
+  height: 4px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-track {
@@ -155,8 +156,8 @@
 }
 
 .scrollbar-thin::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-track {
@@ -274,4 +275,28 @@
 
 .dark .success-banner {
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .fixed {
+    -webkit-backface-visibility: hidden;
+  }
+  
+  input, select, textarea, button {
+    font-size: 16px !important; /* Prevent iOS zoom on focus */
+  }
+  
+  /* Improve touch targets */
+  button, 
+  [role="button"],
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Fix for mobile sticky notes */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
 }

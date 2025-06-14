@@ -55,11 +55,11 @@ const UserPresenceIndicator: React.FC<UserPresenceIndicatorProps> = ({
     <div className="relative">
       {/* Active Users Display */}
       <div 
-        className="flex items-center space-x-2 bg-white/80 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 cursor-pointer hover:bg-white/90 transition-colors"
+        className="flex items-center space-x-1 sm:space-x-2 bg-white/80 backdrop-blur-sm border border-white/20 rounded-lg px-2 py-1 sm:px-3 sm:py-2 cursor-pointer hover:bg-white/90 transition-colors"
         onClick={() => setShowUserList(!showUserList)}
       >
-        <div className="flex -space-x-2">
-          {activeUsers.slice(0, 4).map((user) => {
+        <div className="flex -space-x-1 sm:-space-x-2">
+          {activeUsers.slice(0, 3).map((user) => {
             const ActionIcon = getActionIcon(user.currentAction);
             return (
               <div
@@ -70,11 +70,11 @@ const UserPresenceIndicator: React.FC<UserPresenceIndicatorProps> = ({
                 <img
                   src={user.userAvatar || 'https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=40&h=40&dpr=2'}
                   alt={user.userName}
-                  className="h-8 w-8 rounded-full border-2 border-white object-cover"
+                  className="h-6 w-6 sm:h-8 sm:w-8 rounded-full border-2 border-white object-cover"
                 />
-                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white rounded-full animate-pulse"></div>
-                <div className="absolute -top-1 -left-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
-                  <ActionIcon className="h-2 w-2 text-white" />
+                <div className="absolute -bottom-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-green-500 border-2 border-white rounded-full animate-pulse"></div>
+                <div className="absolute -top-1 -left-1 w-3 h-3 sm:w-4 sm:h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                  <ActionIcon className="h-1.5 w-1.5 sm:h-2 sm:w-2 text-white" />
                 </div>
               </div>
             );
@@ -82,22 +82,22 @@ const UserPresenceIndicator: React.FC<UserPresenceIndicatorProps> = ({
         </div>
         
         <div className="flex items-center space-x-1">
-          <Users className="h-4 w-4 text-gray-600" />
-          <span className="text-sm font-medium text-gray-700">
-            {activeUsers.length} active
+          <Users className="h-3 w-3 sm:h-4 sm:w-4 text-gray-600" />
+          <span className="text-xs sm:text-sm font-medium text-gray-700">
+            {activeUsers.length}
           </span>
         </div>
       </div>
 
       {/* User List Dropdown - Fixed z-index and positioning */}
       {showUserList && (
-        <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-[60]">
-          <div className="p-4 border-b border-gray-200">
-            <h3 className="font-semibold text-gray-900">Active Collaborators</h3>
-            <p className="text-sm text-gray-600">Manage roles and permissions</p>
+        <div className="absolute top-full right-0 mt-2 w-64 sm:w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-[60]">
+          <div className="p-3 sm:p-4 border-b border-gray-200">
+            <h3 className="font-semibold text-gray-900 text-sm sm:text-base">Active Collaborators</h3>
+            <p className="text-xs sm:text-sm text-gray-600">Manage roles and permissions</p>
           </div>
           
-          <div className="max-h-64 overflow-y-auto">
+          <div className="max-h-48 sm:max-h-64 overflow-y-auto">
             {activeUsers.map((user) => {
               const ActionIcon = getActionIcon(user.currentAction);
               const RoleIcon = getRoleIcon(user.role);
@@ -106,32 +106,32 @@ const UserPresenceIndicator: React.FC<UserPresenceIndicatorProps> = ({
               return (
                 <div
                   key={user.userId}
-                  className="flex items-center justify-between p-3 hover:bg-gray-50 transition-colors"
+                  className="flex items-center justify-between p-2 sm:p-3 hover:bg-gray-50 transition-colors"
                 >
-                  <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-2 sm:space-x-3">
                     <div className="relative">
                       <img
                         src={user.userAvatar || 'https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=40&h=40&dpr=2'}
                         alt={user.userName}
-                        className="h-10 w-10 rounded-full object-cover"
+                        className="h-8 w-8 sm:h-10 sm:w-10 rounded-full object-cover"
                       />
-                      <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
+                      <div className="absolute -bottom-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-green-500 border-2 border-white rounded-full"></div>
                     </div>
                     
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       <div className="flex items-center space-x-2">
-                        <span className="font-medium text-gray-900">
+                        <span className="font-medium text-gray-900 text-xs sm:text-sm truncate max-w-[100px] sm:max-w-none">
                           {user.userName}
                           {isCurrentUser && <span className="text-gray-500"> (You)</span>}
                         </span>
-                        <div className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium ${getRoleColor(user.role)}`}>
-                          <RoleIcon className="h-3 w-3" />
+                        <div className={`flex items-center space-x-1 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-full text-xs font-medium ${getRoleColor(user.role)}`}>
+                          <RoleIcon className="h-2 w-2 sm:h-3 sm:w-3" />
                           <span className="capitalize">{user.role || 'member'}</span>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-1 text-sm text-gray-500">
-                        <ActionIcon className="h-3 w-3" />
-                        <span>{user.currentAction || 'viewing board'}</span>
+                      <div className="flex items-center space-x-1 text-xs text-gray-500">
+                        <ActionIcon className="h-2 w-2 sm:h-3 sm:w-3" />
+                        <span className="truncate">{user.currentAction || 'viewing board'}</span>
                       </div>
                     </div>
                   </div>
@@ -142,7 +142,7 @@ const UserPresenceIndicator: React.FC<UserPresenceIndicatorProps> = ({
                       <select
                         value={user.role || 'viewer'}
                         onChange={(e) => onRoleChange?.(user.userId, e.target.value as 'viewer' | 'editor')}
-                        className="text-xs border border-gray-300 rounded px-2 py-1 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="text-xs border border-gray-300 rounded px-1 py-0.5 sm:px-2 sm:py-1 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       >
                         <option value="viewer">Viewer</option>
                         <option value="editor">Editor</option>
@@ -152,8 +152,9 @@ const UserPresenceIndicator: React.FC<UserPresenceIndicatorProps> = ({
                         onClick={() => onRemoveUser?.(user.userId)}
                         className="p-1 text-gray-400 hover:text-red-600 transition-colors"
                         title="Remove user"
+                        aria-label="Remove user"
                       >
-                        <Shield className="h-4 w-4" />
+                        <Shield className="h-3 w-3 sm:h-4 sm:w-4" />
                       </button>
                     </div>
                   )}

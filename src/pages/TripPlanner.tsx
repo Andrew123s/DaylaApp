@@ -193,20 +193,20 @@ const TripPlanner: React.FC = () => {
       />
 
       {/* Header */}
-      <div className="bg-white/80 backdrop-blur-sm border-b border-white/20 p-4">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center space-x-4">
+      <div className="bg-white/80 backdrop-blur-sm border-b border-white/20 p-3 sm:p-4">
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             <div
-              className="w-6 h-6 rounded-full border-2 border-white shadow-sm"
+              className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-white shadow-sm"
               style={{ backgroundColor: trip.color }}
             />
             <div>
-              <h1 className="text-xl font-bold text-gray-900">{trip.title}</h1>
-              <p className="text-sm text-gray-600">{trip.description}</p>
+              <h1 className="text-lg sm:text-xl font-bold text-gray-900 truncate max-w-[150px] sm:max-w-none">{trip.title}</h1>
+              <p className="text-xs sm:text-sm text-gray-600 truncate max-w-[200px] sm:max-w-none">{trip.description}</p>
             </div>
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1 sm:space-x-2">
             {/* User Presence Indicator */}
             <UserPresenceIndicator
               activeUsers={[...activeUsers, ...(user ? [{
@@ -228,19 +228,20 @@ const TripPlanner: React.FC = () => {
             <div className="relative">
               <button
                 onClick={() => setShowNotifications(!showNotifications)}
-                className="relative p-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+                className="relative p-1 sm:p-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+                aria-label="Notifications"
               >
                 <Bell className="h-4 w-4" />
                 {unreadNotifications.length > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center">
                     {unreadNotifications.length}
                   </span>
                 )}
               </button>
 
               {showNotifications && (
-                <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
-                  <div className="p-4 border-b border-gray-200">
+                <div className="absolute right-0 top-full mt-2 w-64 sm:w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
+                  <div className="p-3 sm:p-4 border-b border-gray-200">
                     <h3 className="font-semibold text-gray-900">Notifications</h3>
                   </div>
                   <div className="max-h-64 overflow-y-auto">
@@ -269,28 +270,55 @@ const TripPlanner: React.FC = () => {
               )}
             </div>
 
-            {/* Invite Friends */}
+            {/* Invite Friends - Mobile */}
             <button
               onClick={() => setShowInviteModal(true)}
-              className="flex items-center space-x-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="sm:hidden p-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              aria-label="Invite Friends"
+            >
+              <UserPlus className="h-4 w-4" />
+            </button>
+
+            {/* Invite Friends - Desktop */}
+            <button
+              onClick={() => setShowInviteModal(true)}
+              className="hidden sm:flex items-center space-x-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
               <UserPlus className="h-4 w-4" />
               <span className="text-sm">Invite Friends</span>
             </button>
 
-            {/* Schedule Button */}
+            {/* Schedule Button - Mobile */}
             <button 
               onClick={() => setShowScheduleModal(true)}
-              className="flex items-center space-x-2 px-3 py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+              className="sm:hidden p-1 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+              aria-label="Schedule"
+            >
+              <Calendar className="h-4 w-4" />
+            </button>
+
+            {/* Schedule Button - Desktop */}
+            <button 
+              onClick={() => setShowScheduleModal(true)}
+              className="hidden sm:flex items-center space-x-2 px-3 py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
             >
               <Calendar className="h-4 w-4" />
               <span className="text-sm">Schedule</span>
             </button>
 
-            {/* Share Button */}
+            {/* Share Button - Mobile */}
             <button 
               onClick={() => setShowShareModal(true)}
-              className="flex items-center space-x-2 px-3 py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+              className="sm:hidden p-1 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+              aria-label="Share"
+            >
+              <Share2 className="h-4 w-4" />
+            </button>
+
+            {/* Share Button - Desktop */}
+            <button 
+              onClick={() => setShowShareModal(true)}
+              className="hidden sm:flex items-center space-x-2 px-3 py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
             >
               <Share2 className="h-4 w-4" />
               <span className="text-sm">Share</span>
@@ -299,7 +327,8 @@ const TripPlanner: React.FC = () => {
             {/* Settings Button */}
             <button 
               onClick={() => setShowSettingsModal(true)}
-              className="p-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+              className="p-1 sm:p-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+              aria-label="Settings"
             >
               <Settings className="h-4 w-4" />
             </button>
@@ -307,20 +336,20 @@ const TripPlanner: React.FC = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center space-x-1 bg-gray-100 p-1 rounded-lg w-fit">
+        <div className="flex items-center space-x-1 bg-gray-100 p-1 rounded-lg w-full sm:w-fit overflow-x-auto scrollbar-thin">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as 'planning' | 'budget' | 'sustainability' | 'packing')}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium transition-all duration-200 whitespace-nowrap ${
                   activeTab === tab.id
                     ? 'bg-white text-blue-600 shadow-sm'
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
-                <Icon className="h-4 w-4" />
+                <Icon className="h-3 w-3 sm:h-4 sm:w-4" />
                 <span>{tab.name}</span>
               </button>
             );
@@ -329,33 +358,34 @@ const TripPlanner: React.FC = () => {
 
         {/* Planning Tools */}
         {activeTab === 'planning' && (
-          <div className="flex items-center justify-between mt-4">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <span className="text-sm font-medium text-gray-700">Color:</span>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mt-3 sm:mt-4 space-y-3 sm:space-y-0">
+            <div className="flex items-center space-x-2 sm:space-x-4 overflow-x-auto scrollbar-thin pb-1">
+              <div className="flex items-center space-x-1 sm:space-x-2 whitespace-nowrap">
+                <span className="text-xs sm:text-sm font-medium text-gray-700">Color:</span>
                 <div className="flex space-x-1">
                   {colors.map((color) => (
                     <button
                       key={color}
                       onClick={() => setNewNoteColor(color)}
-                      className={`w-6 h-6 rounded-full border-2 transition-all duration-200 ${
+                      className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 transition-all duration-200 ${
                         newNoteColor === color
                           ? 'border-gray-400 scale-110'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
                       style={{ backgroundColor: color }}
+                      aria-label={`Color ${color}`}
                     />
                   ))}
                 </div>
               </div>
 
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1 sm:space-x-2">
                 <button
                   onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-                  className="flex items-center space-x-2 px-3 py-1 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+                  className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
                 >
-                  <span className="text-lg">{selectedEmoji || '😊'}</span>
-                  <span className="text-sm">Emoji</span>
+                  <span className="text-base sm:text-lg">{selectedEmoji || '😊'}</span>
+                  <span className="text-xs sm:text-sm">Emoji</span>
                 </button>
                 {showEmojiPicker && (
                   <EmojiPicker
@@ -369,17 +399,17 @@ const TripPlanner: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 overflow-x-auto scrollbar-thin pb-1">
               {/* Image Button */}
               <button 
                 onClick={() => {
                   setMediaModalType('image');
                   setShowMediaModal(true);
                 }}
-                className="flex items-center space-x-2 px-3 py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+                className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1 sm:py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
               >
-                <Image className="h-4 w-4" />
-                <span className="text-sm">Image</span>
+                <Image className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="text-xs sm:text-sm">Image</span>
               </button>
 
               {/* Voice Button */}
@@ -388,10 +418,10 @@ const TripPlanner: React.FC = () => {
                   setMediaModalType('voice');
                   setShowMediaModal(true);
                 }}
-                className="flex items-center space-x-2 px-3 py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+                className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1 sm:py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
               >
-                <Mic className="h-4 w-4" />
-                <span className="text-sm">Voice</span>
+                <Mic className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="text-xs sm:text-sm">Voice</span>
               </button>
 
               {/* Link Button */}
@@ -400,10 +430,10 @@ const TripPlanner: React.FC = () => {
                   setMediaModalType('link');
                   setShowMediaModal(true);
                 }}
-                className="flex items-center space-x-2 px-3 py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
+                className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-1 sm:py-2 bg-white/60 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-white/80 transition-colors"
               >
-                <LinkIcon className="h-4 w-4" />
-                <span className="text-sm">Link</span>
+                <LinkIcon className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="text-xs sm:text-sm">Link</span>
               </button>
             </div>
           </div>
@@ -411,10 +441,10 @@ const TripPlanner: React.FC = () => {
 
         {/* Active Users Status */}
         {activeUsers.length > 0 && (
-          <div className="mt-3 flex items-center space-x-4">
+          <div className="mt-2 sm:mt-3 flex items-center space-x-4 overflow-x-auto scrollbar-thin pb-1">
             {activeUsers.map((activeUser) => (
-              <div key={activeUser.userId} className="flex items-center space-x-2 text-sm text-gray-600">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <div key={activeUser.userId} className="flex items-center space-x-2 text-xs sm:text-sm text-gray-600 whitespace-nowrap">
+                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full animate-pulse"></div>
                 <span>{activeUser.userName} is {activeUser.currentAction || 'using board'}</span>
               </div>
             ))}
@@ -472,11 +502,11 @@ const TripPlanner: React.FC = () => {
 
             {/* Instructions */}
             {trip.notes.length === 0 && (
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="text-center bg-white/80 backdrop-blur-sm rounded-2xl p-8 border border-white/20 shadow-lg">
-                  <Plus className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Start Planning</h3>
-                  <p className="text-gray-600 max-w-md">
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none p-4">
+                <div className="text-center bg-white/80 backdrop-blur-sm rounded-2xl p-4 sm:p-8 border border-white/20 shadow-lg max-w-xs sm:max-w-md">
+                  <Plus className="h-8 w-8 sm:h-12 sm:w-12 text-gray-400 mx-auto mb-3 sm:mb-4" />
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2">Start Planning</h3>
+                  <p className="text-xs sm:text-sm text-gray-600">
                     Click anywhere on the canvas to add sticky notes, ideas, and plans for your trip.
                     Use the toolbar above to customize colors, add emojis, and attach media.
                   </p>
@@ -485,15 +515,15 @@ const TripPlanner: React.FC = () => {
             )}
           </div>
         ) : activeTab === 'budget' ? (
-          <div className="h-full overflow-y-auto p-6">
+          <div className="h-full overflow-y-auto p-4 sm:p-6">
             <BudgetDashboard tripId={trip.id} />
           </div>
         ) : activeTab === 'sustainability' ? (
-          <div className="h-full overflow-y-auto p-6">
+          <div className="h-full overflow-y-auto p-4 sm:p-6">
             <SustainabilityCalculator tripId={trip.id} />
           </div>
         ) : (
-          <div className="h-full overflow-y-auto p-6">
+          <div className="h-full overflow-y-auto p-4 sm:p-6">
             <SmartPak tripId={trip.id} />
           </div>
         )}
@@ -502,18 +532,19 @@ const TripPlanner: React.FC = () => {
       {/* Invite Modal */}
       {showInviteModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-gray-900">Invite Friends</h2>
+          <div className="bg-white rounded-2xl max-w-md w-full p-4 sm:p-6 shadow-2xl">
+            <div className="flex items-center justify-between mb-4 sm:mb-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Invite Friends</h2>
               <button
                 onClick={() => setShowInviteModal(false)}
                 className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
+                aria-label="Close"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Share this link with your friends
@@ -523,35 +554,36 @@ const TripPlanner: React.FC = () => {
                     type="text"
                     value={inviteLink}
                     readOnly
-                    className="flex-1 px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-700"
+                    className="flex-1 px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-700 text-sm"
                   />
                   <button
                     onClick={copyInviteLink}
-                    className="p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    className="p-2 sm:p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    aria-label="Copy link"
                   >
                     <Copy className="h-4 w-4" />
                   </button>
                 </div>
-                <p className="text-sm text-gray-500 mt-2">
+                <p className="text-xs sm:text-sm text-gray-500 mt-2">
                   Friends will need to sign up or log in to collaborate on this trip.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-sm font-medium text-gray-700 mb-3">Current Collaborators</h3>
-                <div className="space-y-2">
+                <h3 className="text-sm font-medium text-gray-700 mb-2 sm:mb-3">Current Collaborators</h3>
+                <div className="space-y-2 max-h-40 overflow-y-auto">
                   {trip.collaborators.map((collaboratorId, index) => (
                     <div key={collaboratorId} className="flex items-center space-x-3 p-2 bg-gray-50 rounded-lg">
                       <img
                         src="https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=40&h=40&dpr=2"
                         alt="Collaborator"
-                        className="h-8 w-8 rounded-full object-cover"
+                        className="h-6 w-6 sm:h-8 sm:w-8 rounded-full object-cover"
                       />
-                      <span className="text-sm text-gray-900">
+                      <span className="text-xs sm:text-sm text-gray-900">
                         {index === 0 ? user?.name : `Collaborator ${index + 1}`}
                       </span>
                       {index === 0 && (
-                        <span className="text-xs text-gray-500 bg-gray-200 px-2 py-1 rounded">Owner</span>
+                        <span className="text-xs text-gray-500 bg-gray-200 px-2 py-0.5 rounded">Owner</span>
                       )}
                     </div>
                   ))}
@@ -561,13 +593,13 @@ const TripPlanner: React.FC = () => {
               <div className="flex space-x-3">
                 <button
                   onClick={() => setShowInviteModal(false)}
-                  className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="flex-1 px-3 py-2 sm:px-4 sm:py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm"
                 >
                   Close
                 </button>
                 <button
                   onClick={copyInviteLink}
-                  className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200"
+                  className="flex-1 px-3 py-2 sm:px-4 sm:py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 text-sm"
                 >
                   Copy Link
                 </button>

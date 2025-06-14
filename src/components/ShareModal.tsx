@@ -105,16 +105,17 @@ const ShareModal: React.FC<ShareModalProps> = ({
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-2xl max-w-md w-full shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <div className="flex items-center space-x-3">
-            <Share2 className="h-6 w-6 text-blue-600" />
-            <h2 className="text-xl font-bold text-gray-900">Share Trip</h2>
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <Share2 className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900">Share Trip</h2>
           </div>
           <button
             onClick={onClose}
             className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
+            aria-label="Close"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4 sm:h-5 sm:w-5" />
           </button>
         </div>
 
@@ -126,13 +127,13 @@ const ShareModal: React.FC<ShareModalProps> = ({
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`flex-1 flex items-center justify-center space-x-2 py-3 px-4 text-sm font-medium transition-colors ${
+                className={`flex-1 flex items-center justify-center space-x-1 sm:space-x-2 py-2 sm:py-3 px-2 sm:px-4 text-xs sm:text-sm font-medium transition-colors ${
                   activeTab === tab.id
                     ? 'text-blue-600 border-b-2 border-blue-600'
                     : 'text-gray-500 hover:text-gray-700'
                 }`}
               >
-                <Icon className="h-4 w-4" />
+                <Icon className="h-3 w-3 sm:h-4 sm:w-4" />
                 <span>{tab.name}</span>
               </button>
             );
@@ -140,12 +141,12 @@ const ShareModal: React.FC<ShareModalProps> = ({
         </div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           {activeTab === 'link' && (
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               {/* Invite Link */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                   Invite Link
                 </label>
                 <div className="flex items-center space-x-2">
@@ -153,13 +154,14 @@ const ShareModal: React.FC<ShareModalProps> = ({
                     type="text"
                     value={inviteLink}
                     readOnly
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-700 text-sm"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-700 text-xs sm:text-sm"
                   />
                   <button
                     onClick={() => copyToClipboard(inviteLink, 'link')}
                     className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    aria-label="Copy link"
                   >
-                    {copied === 'link' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                    {copied === 'link' ? <Check className="h-3 w-3 sm:h-4 sm:w-4" /> : <Copy className="h-3 w-3 sm:h-4 sm:w-4" />}
                   </button>
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
@@ -169,7 +171,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
 
               {/* Invite Code */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                   Invite Code
                 </label>
                 <div className="flex items-center space-x-2">
@@ -177,13 +179,14 @@ const ShareModal: React.FC<ShareModalProps> = ({
                     type="text"
                     value={inviteCode}
                     readOnly
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-700 text-sm font-mono"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-700 text-xs sm:text-sm font-mono"
                   />
                   <button
                     onClick={() => copyToClipboard(inviteCode, 'code')}
                     className="p-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                    aria-label="Copy code"
                   >
-                    {copied === 'code' ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                    {copied === 'code' ? <Check className="h-3 w-3 sm:h-4 sm:w-4" /> : <Copy className="h-3 w-3 sm:h-4 sm:w-4" />}
                   </button>
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
@@ -193,21 +196,21 @@ const ShareModal: React.FC<ShareModalProps> = ({
 
               {/* QR Code */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2">
                   QR Code
                 </label>
-                <div className="flex items-center justify-center p-6 border-2 border-dashed border-gray-300 rounded-lg">
+                <div className="flex items-center justify-center p-4 sm:p-6 border-2 border-dashed border-gray-300 rounded-lg">
                   {isGeneratingQR ? (
                     <div className="text-center">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
-                      <p className="text-sm text-gray-600">Generating QR code...</p>
+                      <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+                      <p className="text-xs sm:text-sm text-gray-600">Generating QR code...</p>
                     </div>
                   ) : (
                     <div className="text-center">
-                      <QrCode className="h-16 w-16 text-gray-400 mx-auto mb-2" />
+                      <QrCode className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400 mx-auto mb-2" />
                       <button
                         onClick={generateQRCode}
-                        className="text-blue-600 hover:text-blue-700 font-medium text-sm"
+                        className="text-blue-600 hover:text-blue-700 font-medium text-xs sm:text-sm"
                       >
                         Generate QR Code
                       </button>
@@ -217,119 +220,119 @@ const ShareModal: React.FC<ShareModalProps> = ({
               </div>
 
               {/* Quick Share Buttons */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 <button
                   onClick={shareViaEmail}
-                  className="flex items-center justify-center space-x-2 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="flex items-center justify-center space-x-1 sm:space-x-2 p-2 sm:p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-xs sm:text-sm"
                 >
-                  <Mail className="h-4 w-4" />
-                  <span className="text-sm">Email</span>
+                  <Mail className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span>Email</span>
                 </button>
                 <button
                   onClick={shareViaSMS}
-                  className="flex items-center justify-center space-x-2 p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="flex items-center justify-center space-x-1 sm:space-x-2 p-2 sm:p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-xs sm:text-sm"
                 >
-                  <MessageCircle className="h-4 w-4" />
-                  <span className="text-sm">SMS</span>
+                  <MessageCircle className="h-3 w-3 sm:h-4 sm:w-4" />
+                  <span>SMS</span>
                 </button>
               </div>
             </div>
           )}
 
           {activeTab === 'social' && (
-            <div className="space-y-4">
-              <p className="text-sm text-gray-600 mb-4">
+            <div className="space-y-3 sm:space-y-4">
+              <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">
                 Share your trip on social media to let others know about your adventure
               </p>
 
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 <button
                   onClick={shareViaWhatsApp}
-                  className="w-full flex items-center space-x-3 p-3 border border-gray-300 rounded-lg hover:bg-green-50 hover:border-green-300 transition-colors"
+                  className="w-full flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 border border-gray-300 rounded-lg hover:bg-green-50 hover:border-green-300 transition-colors text-xs sm:text-sm"
                 >
-                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                    <MessageCircle className="h-4 w-4 text-white" />
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-500 rounded-full flex items-center justify-center">
+                    <MessageCircle className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
                   </div>
                   <span className="font-medium">Share on WhatsApp</span>
                 </button>
 
                 <button
                   onClick={shareViaTwitter}
-                  className="w-full flex items-center space-x-3 p-3 border border-gray-300 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors"
+                  className="w-full flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 border border-gray-300 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors text-xs sm:text-sm"
                 >
-                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                    <Share2 className="h-4 w-4 text-white" />
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                    <Share2 className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
                   </div>
                   <span className="font-medium">Share on Twitter</span>
                 </button>
 
                 <button
                   onClick={shareViaFacebook}
-                  className="w-full flex items-center space-x-3 p-3 border border-gray-300 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors"
+                  className="w-full flex items-center space-x-2 sm:space-x-3 p-2 sm:p-3 border border-gray-300 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors text-xs sm:text-sm"
                 >
-                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                    <Share2 className="h-4 w-4 text-white" />
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                    <Share2 className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
                   </div>
                   <span className="font-medium">Share on Facebook</span>
                 </button>
               </div>
 
-              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                <h4 className="font-medium text-gray-900 mb-2">Share Preview</h4>
-                <p className="text-sm text-gray-600">{shareText}</p>
+              <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-gray-50 rounded-lg">
+                <h4 className="font-medium text-gray-900 mb-2 text-xs sm:text-sm">Share Preview</h4>
+                <p className="text-xs text-gray-600">{shareText}</p>
               </div>
             </div>
           )}
 
           {activeTab === 'export' && (
-            <div className="space-y-4">
-              <p className="text-sm text-gray-600 mb-4">
+            <div className="space-y-3 sm:space-y-4">
+              <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">
                 Export your trip data in various formats for backup or sharing
               </p>
 
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 <button
                   onClick={() => exportTripData('pdf')}
-                  className="w-full flex items-center justify-between p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="w-full flex items-center justify-between p-2 sm:p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-xs sm:text-sm"
                 >
-                  <div className="flex items-center space-x-3">
-                    <Download className="h-5 w-5 text-red-600" />
+                  <div className="flex items-center space-x-2 sm:space-x-3">
+                    <Download className="h-4 w-4 sm:h-5 sm:w-5 text-red-600" />
                     <div className="text-left">
                       <div className="font-medium">Export as PDF</div>
-                      <div className="text-sm text-gray-500">Printable trip summary</div>
+                      <div className="text-xs text-gray-500">Printable trip summary</div>
                     </div>
                   </div>
                 </button>
 
                 <button
                   onClick={() => exportTripData('ical')}
-                  className="w-full flex items-center justify-between p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="w-full flex items-center justify-between p-2 sm:p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-xs sm:text-sm"
                 >
-                  <div className="flex items-center space-x-3">
-                    <Download className="h-5 w-5 text-blue-600" />
+                  <div className="flex items-center space-x-2 sm:space-x-3">
+                    <Download className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" />
                     <div className="text-left">
                       <div className="font-medium">Export Calendar</div>
-                      <div className="text-sm text-gray-500">iCal format for calendar apps</div>
+                      <div className="text-xs text-gray-500">iCal format for calendar apps</div>
                     </div>
                   </div>
                 </button>
 
                 <button
                   onClick={() => exportTripData('json')}
-                  className="w-full flex items-center justify-between p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="w-full flex items-center justify-between p-2 sm:p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-xs sm:text-sm"
                 >
-                  <div className="flex items-center space-x-3">
-                    <Download className="h-5 w-5 text-green-600" />
+                  <div className="flex items-center space-x-2 sm:space-x-3">
+                    <Download className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
                     <div className="text-left">
                       <div className="font-medium">Export Data</div>
-                      <div className="text-sm text-gray-500">JSON format for backup</div>
+                      <div className="text-xs text-gray-500">JSON format for backup</div>
                     </div>
                   </div>
                 </button>
               </div>
 
-              <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                <p className="text-sm text-yellow-800">
+              <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <p className="text-xs text-yellow-800">
                   <strong>Note:</strong> Exported files will include your trip details, schedule, and planning notes. Personal information of collaborators is not included.
                 </p>
               </div>
