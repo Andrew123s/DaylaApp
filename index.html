@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#3b82f6" />
+    <meta name="description" content="Dayla - A comprehensive travel planning platform with real-time collaboration" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Dayla" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>Dayla - Plan Your Adventures</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Check if we're in a supported environment for Service Workers
+      function isServiceWorkerSupported() {
+        // Check if Service Workers are supported
+        if (!('serviceWorker' in navigator)) {
+          return false;
+        }
+        
+        // Check if we're in StackBlitz (which doesn't support Service Workers)
+        if (window.location.hostname.includes('stackblitz') || 
+            window.location.hostname.includes('webcontainer')) {
+          console.log('Service Worker registration skipped: StackBlitz environment detected');
+          return false;
+        }
+        
+        // Check for other environments that might not support Service Workers
+        if (window.location.protocol === 'file:') {
+          console.log('Service Worker registration skipped: file:// protocol not supported');
+          return false;
+        }
+        
+        return true;
+      }
+
+      if (isServiceWorkerSupported()) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then((registration) => {
+              console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch((error) => {
+              console.error('Service Worker registration failed:', error);
+            });
+        });
+      } else {
+        console.log('Service Worker not supported in this environment');
+      }
+    </script>
+    <noscript>
+      <div style="padding: 2rem; text-align: center; font-family: system-ui, sans-serif;">
+        <h1 style="margin-bottom: 1rem;">JavaScript is required</h1>
+        <p>Dayla requires JavaScript to be enabled in your browser to function properly.</p>
+      </div>
+    </noscript>
+  </body>
+</html>
