@@ -17,7 +17,30 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
-      if ('serviceWorker' in navigator) {
+      // Check if we're in a supported environment for Service Workers
+      function isServiceWorkerSupported() {
+        // Check if Service Workers are supported
+        if (!('serviceWorker' in navigator)) {
+          return false;
+        }
+        
+        // Check if we're in StackBlitz (which doesn't support Service Workers)
+        if (window.location.hostname.includes('stackblitz') || 
+            window.location.hostname.includes('webcontainer')) {
+          console.log('Service Worker registration skipped: StackBlitz environment detected');
+          return false;
+        }
+        
+        // Check for other environments that might not support Service Workers
+        if (window.location.protocol === 'file:') {
+          console.log('Service Worker registration skipped: file:// protocol not supported');
+          return false;
+        }
+        
+        return true;
+      }
+
+      if (isServiceWorkerSupported()) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('/service-worker.js')
             .then((registration) => {
@@ -27,6 +50,8 @@
               console.error('Service Worker registration failed:', error);
             });
         });
+      } else {
+        console.log('Service Worker not supported in this environment');
       }
     </script>
     <noscript>

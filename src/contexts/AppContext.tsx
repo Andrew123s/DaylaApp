@@ -62,6 +62,32 @@ export const useApp = () => {
   return context;
 };
 
+// Helper function to check if Service Worker features are supported
+const isServiceWorkerSupported = (): boolean => {
+  // Check if Service Workers are supported
+  if (!('serviceWorker' in navigator)) {
+    return false;
+  }
+  
+  // Check if we're in StackBlitz or other unsupported environments
+  if (window.location.hostname.includes('stackblitz') || 
+      window.location.hostname.includes('webcontainer')) {
+    return false;
+  }
+  
+  // Check for file:// protocol
+  if (window.location.protocol === 'file:') {
+    return false;
+  }
+  
+  return true;
+};
+
+// Helper function to check if background sync is supported
+const isBackgroundSyncSupported = (): boolean => {
+  return isServiceWorkerSupported() && 'SyncManager' in window;
+};
+
 // Provider component
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Your existing state
@@ -108,13 +134,24 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     
     registerConnectivityListeners(handleOnline, handleOffline);
     
-    // Register for sync events if service worker is available
-    if ('serviceWorker' in navigator && 'SyncManager' in window) {
-      navigator.serviceWorker.ready.then(registration => {
-        // Register for background sync
-        registration.sync.register('sync-notes');
-        registration.sync.register('sync-expenses');
-      });
+    // Register for sync events only if supported
+    if (isBackgroundSyncSupported()) {
+      navigator.serviceWorker.ready
+        .then(registration => {
+          // Only register for background sync if the service worker is ready
+          try {
+            registration.sync.register('sync-notes');
+            registration.sync.register('sync-expenses');
+            console.log('Background sync registered successfully');
+          } catch (error) {
+            console.warn('Background sync registration failed:', error);
+          }
+        })
+        .catch(error => {
+          console.warn('Service Worker not ready for background sync:', error);
+        });
+    } else {
+      console.log('Background sync not supported in this environment');
     }
     
     return () => {
