@@ -320,7 +320,7 @@
   min-width: 44px;
   display: flex;
   align-items: center;
-  justify-center;
+  justify-content: center;
   padding: 8px;
   border-radius: 8px;
 }
