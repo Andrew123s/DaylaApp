@@ -1,5 +1,12 @@
 // PWA utility functions
 
+// Store the beforeinstallprompt event for later use
+declare global {
+  interface Window {
+    deferredPrompt: any;
+  }
+}
+
 /**
  * Checks if the app is running in standalone mode (installed as PWA)
  */
@@ -12,7 +19,8 @@ export const isRunningAsStandalone = (): boolean => {
  * Checks if the app can be installed (has a beforeinstallprompt event)
  */
 export const checkInstallable = async (): Promise<boolean> => {
-  if ('BeforeInstallPromptEvent' in window) {
+  // If we already have a deferred prompt, we can install
+  if (window.deferredPrompt) {
     return true;
   }
   
@@ -24,27 +32,26 @@ export const checkInstallable = async (): Promise<boolean> => {
 };
 
 /**
- * Stores the beforeinstallprompt event for later use
- */
-let deferredPrompt: any = null;
-
-/**
  * Initializes the PWA install prompt listener
  */
 export const initInstallPrompt = (): void => {
+  // Initialize deferredPrompt to null
+  window.deferredPrompt = null;
+  
   window.addEventListener('beforeinstallprompt', (e) => {
     // Prevent the mini-infobar from appearing on mobile
     e.preventDefault();
     // Stash the event so it can be triggered later
-    deferredPrompt = e;
+    window.deferredPrompt = e;
     // Update UI to notify the user they can install the PWA
     document.dispatchEvent(new CustomEvent('pwaInstallable'));
+    console.log('App can be installed, saved prompt event');
   });
   
   // Handle the app being installed
   window.addEventListener('appinstalled', () => {
     // Clear the deferredPrompt
-    deferredPrompt = null;
+    window.deferredPrompt = null;
     // Log or update analytics
     console.log('PWA was installed');
     document.dispatchEvent(new CustomEvent('pwaInstalled'));
@@ -56,18 +63,20 @@ export const initInstallPrompt = (): void => {
  * @returns Promise<boolean> - Whether the user accepted the install prompt
  */
 export const showInstallPrompt = async (): Promise<boolean> => {
-  if (!deferredPrompt) {
+  if (!window.deferredPrompt) {
+    console.log('No installation prompt available');
     return false;
   }
   
   // Show the install prompt
-  deferredPrompt.prompt();
+  window.deferredPrompt.prompt();
   
   // Wait for the user to respond to the prompt
-  const { outcome } = await deferredPrompt.userChoice;
+  const { outcome } = await window.deferredPrompt.userChoice;
+  console.log(`User response to install prompt: ${outcome}`);
   
   // We've used the prompt, and can't use it again, discard it
-  deferredPrompt = null;
+  window.deferredPrompt = null;
   
   return outcome === 'accepted';
 };

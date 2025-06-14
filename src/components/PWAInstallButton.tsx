@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Download } from 'lucide-react';
-import { isRunningAsStandalone, checkInstallable, showInstallPrompt } from '../lib/pwa';
+import { showInstallPrompt } from '../lib/pwa';
 
 interface PWAInstallButtonProps {
   className?: string;
@@ -10,20 +10,6 @@ const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({ className = '' }) =
   const [isInstallable, setIsInstallable] = useState(false);
   
   useEffect(() => {
-    // Don't show if already running as standalone
-    if (isRunningAsStandalone()) {
-      setIsInstallable(false);
-      return;
-    }
-    
-    // Check if app is installable
-    const checkInstallability = async () => {
-      const installable = await checkInstallable();
-      setIsInstallable(installable);
-    };
-    
-    checkInstallability();
-    
     // Listen for pwaInstallable event
     const handleInstallable = () => {
       setIsInstallable(true);
@@ -37,6 +23,11 @@ const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({ className = '' }) =
     document.addEventListener('pwaInstallable', handleInstallable);
     document.addEventListener('pwaInstalled', handleInstalled);
     
+    // Check if the deferredPrompt is already available (page might have loaded before our event listeners)
+    if (window.deferredPrompt) {
+      setIsInstallable(true);
+    }
+    
     return () => {
       document.removeEventListener('pwaInstallable', handleInstallable);
       document.removeEventListener('pwaInstalled', handleInstalled);
@@ -44,7 +35,10 @@ const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({ className = '' }) =
   }, []);
   
   const handleInstall = async () => {
-    await showInstallPrompt();
+    const installed = await showInstallPrompt();
+    if (installed) {
+      setIsInstallable(false);
+    }
   };
   
   if (!isInstallable) {
