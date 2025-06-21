@@ -237,7 +237,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       email,
       name,
       avatar: 'https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
-      hasCompletedOnboarding: false,
+      hasCompletedOnboarding: false, // Important: Set to false for new users
       isAdmin: email.includes('admin'), // Make admin if email contains 'admin'
       settings: {
         language: 'en',

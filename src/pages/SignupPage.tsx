@@ -18,8 +18,7 @@ const SignupPage: React.FC = () => {
   const navigate = useNavigate();
 
   if (user) {
-    // If user is logged in but hasn't completed onboarding, redirect to dashboard
-    // The OnboardingGuard will handle showing the onboarding flow
+    // If user is already logged in, redirect to dashboard
     return <Navigate to="/dashboard" replace />;
   }
 

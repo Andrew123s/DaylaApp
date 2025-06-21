@@ -87,6 +87,13 @@ function App() {
                   </OnboardingGuard>
                 </AuthGuard>
               } />
+              
+              {/* Redirect from root to dashboard for authenticated users */}
+              <Route path="/" element={
+                <AuthGuard>
+                  <Navigate to="/dashboard" replace />
+                </AuthGuard>
+              } />
             </Routes>
           </div>
         </Router>
