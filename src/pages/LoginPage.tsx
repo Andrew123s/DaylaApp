@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { Compass, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -11,9 +11,13 @@ const LoginPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Get the redirect path from location state or default to dashboard
+  const from = (location.state as any)?.from?.pathname || '/dashboard';
 
   if (user) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={from} replace />;
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -27,6 +31,8 @@ const LoginPage: React.FC = () => {
       // If email contains 'admin', redirect to admin dashboard
       if (email.includes('admin')) {
         navigate('/admin');
+      } else {
+        navigate(from);
       }
     } catch (err) {
       setError('Invalid email or password');

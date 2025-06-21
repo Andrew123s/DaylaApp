@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 interface AuthGuardProps {
@@ -8,9 +8,11 @@ interface AuthGuardProps {
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const { user } = useAuth();
+  const location = useLocation();
 
   if (!user) {
-    return <Navigate to="/login\" replace />;
+    // Redirect to login page but save the location they were trying to access
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   return <>{children}</>;

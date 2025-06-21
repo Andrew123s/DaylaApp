@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Compass, Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -15,9 +15,12 @@ const SignupPage: React.FC = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   if (user) {
-    return <Navigate to="/" replace />;
+    // If user is logged in but hasn't completed onboarding, redirect to dashboard
+    // The OnboardingGuard will handle showing the onboarding flow
+    return <Navigate to="/dashboard" replace />;
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,6 +41,8 @@ const SignupPage: React.FC = () => {
 
     try {
       await signup(formData.email, formData.password, formData.name);
+      // After successful signup, redirect to dashboard where OnboardingGuard will show the onboarding flow
+      navigate('/dashboard');
     } catch (err) {
       setError('Failed to create account');
     } finally {
