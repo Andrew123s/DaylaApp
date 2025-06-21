@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { AppProvider } from './contexts/AppContext';
 import Layout from './components/Layout';
@@ -31,6 +31,7 @@ function App() {
         <Router>
           <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
             <Routes>
+              <Route path="/" element={<Navigate to="/login" />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/invite/:inviteCode" element={<InvitePage />} />
@@ -48,7 +49,7 @@ function App() {
               </Route>
               
               {/* User Routes */}
-              <Route path="/" element={
+              <Route path="/dashboard" element={
                 <AuthGuard>
                   <OnboardingGuard>
                     <Layout>
