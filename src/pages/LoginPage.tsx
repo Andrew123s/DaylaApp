@@ -14,7 +14,7 @@ const LoginPage: React.FC = () => {
   const location = useLocation();
   
   // Get the redirect path from location state or default to dashboard
-  const from = (location.state as any)?.from?.pathname || '/dashboard';
+  const from = (location.state as any)?.from?.pathname || '/';
 
   if (user) {
     return <Navigate to={from} replace />;
