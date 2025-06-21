@@ -18,7 +18,7 @@ const SignupPage: React.FC = () => {
   const [error, setError] = useState('');
 
   if (user) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -41,7 +41,7 @@ const SignupPage: React.FC = () => {
       await signup(formData.email, formData.password, formData.name);
       // After successful signup, redirect to dashboard
       // The OnboardingGuard will intercept and show the onboarding flow
-      navigate('/', { replace: true });
+      navigate('/dashboard', { replace: true });
     } catch (err) {
       setError('Failed to create account');
     } finally {
