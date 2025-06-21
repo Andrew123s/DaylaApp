@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { AppProvider } from './contexts/AppContext';
 import Layout from './components/Layout';
@@ -51,7 +51,7 @@ function App() {
               </Route>
               
               {/* User Routes */}
-              <Route path="/" element={
+              <Route path="/dashboard" element={
                 <AuthGuard>
                   <OnboardingGuard>
                     <Layout>
@@ -85,6 +85,13 @@ function App() {
                       <Profile />
                     </Layout>
                   </OnboardingGuard>
+                </AuthGuard>
+              } />
+              
+              {/* Redirect from root to dashboard for authenticated users */}
+              <Route path="/" element={
+                <AuthGuard>
+                  <Navigate to="/dashboard" replace />
                 </AuthGuard>
               } />
             </Routes>
