@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 
 const SignupPage: React.FC = () => {
   const { user, signup } = useAuth();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,11 +16,9 @@ const SignupPage: React.FC = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   if (user) {
-    // If user is already logged in, redirect to dashboard
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/" replace />;
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,8 +39,9 @@ const SignupPage: React.FC = () => {
 
     try {
       await signup(formData.email, formData.password, formData.name);
-      // After successful signup, redirect to dashboard where OnboardingGuard will show the onboarding flow
-      navigate('/dashboard');
+      // After successful signup, redirect to dashboard
+      // The OnboardingGuard will intercept and show the onboarding flow
+      navigate('/', { replace: true });
     } catch (err) {
       setError('Failed to create account');
     } finally {
