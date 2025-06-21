@@ -291,7 +291,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setCurrentLanguage(settingsUpdates.language);
       }
       
-      // Show success notification
+      // Show success message
       showSuccessToast('Settings updated successfully!');
     }
   };

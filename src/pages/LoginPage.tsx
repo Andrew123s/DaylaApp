@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { Compass, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 const LoginPage: React.FC = () => {
   const { user, login } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('user@example.com');
+  const [password, setPassword] = useState('password123');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -15,6 +15,11 @@ const LoginPage: React.FC = () => {
   
   // Get the redirect path from location state or default to dashboard
   const from = (location.state as any)?.from?.pathname || '/dashboard';
+
+  useEffect(() => {
+    // Clear any previous errors when component mounts
+    setError('');
+  }, []);
 
   if (user) {
     return <Navigate to={from} replace />;
@@ -130,7 +135,7 @@ const LoginPage: React.FC = () => {
           {/* Demo Account */}
           <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-blue-50 rounded-lg">
             <p className="text-xs sm:text-sm text-blue-800 text-center">
-              never <strong>doubt</strong> yourself you are amazing
+              <strong>Demo Account:</strong> user@example.com / password123
             </p>
           </div>
         </div>
