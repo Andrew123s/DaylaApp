@@ -13,6 +13,7 @@ import Profile from './pages/Profile';
 import TripPlanner from './pages/TripPlanner';
 import InvitePage from './pages/InvitePage';
 import SupabaseTest from './pages/SupabaseTest';
+import LandingPage from './pages/LandingPage';
 
 // Admin pages
 import AdminLayout from './pages/admin/AdminLayout';
@@ -31,7 +32,8 @@ function App() {
         <Router>
           <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
             <Routes>
-              <Route path="/" element={<Navigate to="/login" />} />
+              {/* Public Routes */}
+              <Route path="/" element={<LandingPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/invite/:inviteCode" element={<InvitePage />} />
