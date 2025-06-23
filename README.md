@@ -1,5 +1,7 @@
 # Dayla - Collaborative Trip Planning Platform
 
+link www.daylapp.com 
+
 A comprehensive travel planning platform built with React, TypeScript, Tailwind CSS, and Supabase.
 
 ## 🚀 Features
