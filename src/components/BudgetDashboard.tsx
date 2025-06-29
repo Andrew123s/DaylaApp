@@ -69,7 +69,7 @@ const BudgetDashboard: React.FC<BudgetDashboardProps> = ({ tripId }) => {
 
   if (!trip) return null;
 
-  if (!budget && !isLoading) {
+  if (!budget && !loading) {
     return <BudgetSetup tripId={tripId} onSetup={() => setShowBudgetSetup(false)} />;
   }
 
