@@ -29,6 +29,7 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
+    setError('');
 
     try {
       await login(email, password);
@@ -39,8 +40,10 @@ const LoginPage: React.FC = () => {
       } else {
         navigate(from);
       }
-    } catch (err) {
+    } catch (err: any) {
       setError('Invalid email or password');
+      setIsLoading(false);
+      return;
     } finally {
       setIsLoading(false);
     }

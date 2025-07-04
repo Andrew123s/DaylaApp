@@ -29,6 +29,12 @@ const SignupPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    
+    // Validate form data
+    if (!formData.name.trim()) {
+      setError('Name is required');
+      return;
+    }
 
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
@@ -45,10 +51,11 @@ const SignupPage: React.FC = () => {
     try {
       await signup(formData.email, formData.password, formData.name);
       // After successful signup, redirect to dashboard
-      // The OnboardingGuard will intercept and show the onboarding flow
-      navigate('/dashboard', { replace: true });
+      navigate('/dashboard');
     } catch (err) {
       setError('Failed to create account');
+      setIsLoading(false);
+      return;
     } finally {
       setIsLoading(false);
     }

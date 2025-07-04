@@ -195,39 +195,50 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const login = async (email: string, password: string) => {
-    // Simulate API call
-    const mockUser: User = {
-      id: '1',
-      email,
-      name: 'Adventure Seeker',
-      avatar: 'https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
-      bio: 'Love exploring new places and creating memories!',
-      interests: ['Hiking', 'Photography', 'Culture'],
-      hasCompletedOnboarding: true,
-      isAdmin: email.includes('admin'), // Make admin if email contains 'admin'
-      settings: {
-        language: 'en',
-        theme: 'light',
-        timezone: 'UTC-8',
-        notifications: {
-          tripUpdates: true,
-          chatMessages: true,
-          communityPosts: false
-        },
-        privacy: {
-          profileVisibility: 'public',
-          tripSharing: true,
-          locationSharing: false
-        }
+    try {
+      // Validate credentials (in a real app, this would be an API call)
+      if (email === 'user@example.com' && password === 'password123' || 
+          email.includes('admin') && password === 'password123') {
+        
+        // Simulate API call
+        const mockUser: User = {
+          id: '1',
+          email,
+          name: 'Adventure Seeker',
+          avatar: 'https://images.pexels.com/photos/3184306/pexels-photo-3184306.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&dpr=2',
+          bio: 'Love exploring new places and creating memories!',
+          interests: ['Hiking', 'Photography', 'Culture'],
+          hasCompletedOnboarding: true,
+          isAdmin: email.includes('admin'), // Make admin if email contains 'admin'
+          settings: {
+            language: 'en',
+            theme: 'light',
+            timezone: 'UTC-8',
+            notifications: {
+              tripUpdates: true,
+              chatMessages: true,
+              communityPosts: false
+            },
+            privacy: {
+              profileVisibility: 'public',
+              tripSharing: true,
+              locationSharing: false
+            }
+          }
+        };
+        setUser(mockUser);
+        localStorage.setItem('daylaUser', JSON.stringify(mockUser));
+      } else {
+        throw new Error('Invalid email or password');
       }
-    };
-    setUser(mockUser);
-    localStorage.setItem('daylaUser', JSON.stringify(mockUser));
+    } catch (error) {
+      throw error;
+    }
     
     // Apply user's theme and language preferences
-    if (mockUser.settings) {
-      applyTheme(mockUser.settings.theme);
-      setCurrentLanguage(mockUser.settings.language);
+    if (user?.settings) {
+      applyTheme(user.settings.theme);
+      setCurrentLanguage(user.settings.language);
     }
   };
 
