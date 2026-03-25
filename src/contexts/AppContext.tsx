@@ -291,8 +291,26 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
-  // Include all your other functions here...
-  // For brevity, I'm assuming they exist and just adding the context value
+  const updateStickyNote = (tripId: string, noteId: string, updates: any) => {
+    setTrips(prev => prev.map(trip =>
+      trip.id === tripId
+        ? {
+            ...trip,
+            notes: trip.notes.map((note: any) =>
+              note.id === noteId ? { ...note, ...updates } : note
+            )
+          }
+        : trip
+    ));
+  };
+
+  const deleteStickyNote = (tripId: string, noteId: string) => {
+    setTrips(prev => prev.map(trip =>
+      trip.id === tripId
+        ? { ...trip, notes: trip.notes.filter((note: any) => note.id !== noteId) }
+        : trip
+    ));
+  };
 
   // Context value
   const value = {
@@ -301,8 +319,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     createTrip,
     updateTrip,
     addStickyNote,
-    updateStickyNote: () => {}, // Your implementation
-    deleteStickyNote: () => {}, // Your implementation
+    updateStickyNote,
+    deleteStickyNote,
     activeTrip,
     setActiveTrip,
     updateUserActivity: () => {}, // Your implementation

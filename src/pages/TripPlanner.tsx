@@ -53,7 +53,12 @@ const TripPlanner: React.FC = () => {
     setNoteEditingUser
   } = useApp();
   const { user } = useAuth();
-  const [activeTab, setActiveTab] = useState<'planning' | 'budget' | 'sustainability' | 'packing'>('planning');
+  const activeTabStorageKey = id ? `daylaActiveTab_${id}` : null;
+  const [activeTab, setActiveTab] = useState<'planning' | 'budget' | 'sustainability' | 'packing'>(() => {
+    if (!id) return 'planning';
+    const saved = localStorage.getItem(`daylaActiveTab_${id}`);
+    return (saved as 'planning' | 'budget' | 'sustainability' | 'packing') || 'planning';
+  });
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [newNoteColor, setNewNoteColor] = useState('#FFE066');
   const [selectedEmoji, setSelectedEmoji] = useState('');
@@ -95,6 +100,13 @@ const TripPlanner: React.FC = () => {
       return () => clearInterval(interval);
     }
   }, [trip, user, updateUserActivity]);
+
+  // Persist active tab per trip so it survives navigation
+  useEffect(() => {
+    if (activeTabStorageKey) {
+      localStorage.setItem(activeTabStorageKey, activeTab);
+    }
+  }, [activeTab, activeTabStorageKey]);
 
   // Close emoji picker when clicking outside
   useEffect(() => {
